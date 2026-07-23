@@ -2,27 +2,39 @@
   "name": "portfolio-website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "BUILD_PROFILE=local next dev",
     "build": "next build",
+    "build:local": "BUILD_PROFILE=local next build",
+    "build:test": "BUILD_PROFILE=test next build",
+    "build:release": "BUILD_PROFILE=release next build",
     "start": "next start",
-    "lint": "eslint"
+    "format": "prettier --write src tests package.json next.config.ts tsconfig.json eslint.config.mjs postcss.config.mjs",
+    "format:check": "prettier --check src tests package.json next.config.ts tsconfig.json eslint.config.mjs postcss.config.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/config/build.test.ts",
+    "validate": "npm run format:check && npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {
+    "geist": "1.7.2",
     "next": "16.2.11",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "20.19.43",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
     "eslint-config-next": "16.2.11",
-    "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "3.9.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
   }
 }

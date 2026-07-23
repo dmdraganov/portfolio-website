@@ -1,26 +1,144 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --color-surface-light: #f4f2ed;
+  --color-surface-raised-light: #ffffff;
+  --color-ink-light: #101010;
+  --color-muted-light: #66645f;
+  --color-border-light: #d6d2c8;
+  --color-surface-dark: #0b0b0c;
+  --color-surface-raised-dark: #151517;
+  --color-ink-dark: #f3f1ec;
+  --color-muted-dark: #a3a09a;
+  --color-border-dark: #2d2d31;
+  --signal: #ff5a36;
+  --signal-contrast: #0b0b0c;
+
+  --surface: var(--color-surface-light);
+  --surface-raised: var(--color-surface-raised-light);
+  --ink: var(--color-ink-light);
+  --muted: var(--color-muted-light);
+  --border: var(--color-border-light);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-section: clamp(6rem, 12vw, 12rem);
+  --space-gutter: clamp(1rem, 3vw, 3rem);
+
+  --shape-radius-sm: 0.25rem;
+  --shape-radius-md: 0.625rem;
+  --shape-radius-lg: 1.25rem;
+  --shape-radius-full: 9999px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-press: 140ms;
+  --duration-hover: 180ms;
+  --duration-ui: 220ms;
+  --duration-drawer: 280ms;
+  --duration-reveal: 600ms;
+  --stagger-step: 40ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-signal: var(--signal);
+  --color-signal-contrast: var(--signal-contrast);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --text-display-xl: clamp(3.5rem, 9vw, 9rem);
+  --text-display-xl--line-height: 0.88;
+  --text-display-xl--letter-spacing: -0.065em;
+  --text-display-lg: clamp(2.5rem, 6vw, 6rem);
+  --text-display-lg--line-height: 0.94;
+  --text-display-lg--letter-spacing: -0.05em;
+  --text-heading: clamp(1.75rem, 3vw, 3.25rem);
+  --text-heading--line-height: 1.05;
+  --text-heading--letter-spacing: -0.035em;
+  --text-body-lg: clamp(1.125rem, 1.5vw, 1.5rem);
+  --text-body-lg--line-height: 1.45;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+
+  --radius-sm: var(--shape-radius-sm);
+  --radius-md: var(--shape-radius-md);
+  --radius-lg: var(--shape-radius-lg);
+  --radius-full: var(--shape-radius-full);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 20rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family:
+    var(--font-geist-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--signal-contrast);
+}
+
+:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+}
+
+[data-surface='inverse'] {
+  color-scheme: dark;
+  --surface: var(--color-surface-dark);
+  --surface-raised: var(--color-surface-raised-dark);
+  --ink: var(--color-ink-dark);
+  --muted: var(--color-muted-dark);
+  --border: var(--color-border-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
