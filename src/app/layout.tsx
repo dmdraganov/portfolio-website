@@ -1,6 +1,8 @@
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 
+import { navigation } from '../content/site';
+import { SiteHeader } from '../shared/ui/site-header';
 import './globals.css';
 
 export default function RootLayout({
@@ -10,7 +12,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SiteHeader items={navigation} />
+        {children}
+      </body>
     </html>
   );
 }
