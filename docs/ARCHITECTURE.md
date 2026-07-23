@@ -137,6 +137,8 @@ Reviewed implementation baseline:
 | --- | --- | --- |
 | Node.js | 24.18.0 LTS | planned Docker runtime |
 | Next.js | 16.2.11 | locked |
+| PostCSS | 8.5.22 | security override, exact-locked |
+| sharp | 0.35.3 | security override, exact-locked |
 | React | 19.2.4 | locked |
 | React DOM | 19.2.4 | locked |
 | TypeScript | 5.9.3 | locked |
