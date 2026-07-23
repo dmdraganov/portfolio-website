@@ -1,0 +1,15 @@
+.git
+.beads
+.next
+node_modules
+coverage
+playwright-report
+test-results
+.env
+.env.*
+!.env.example
+Dockerfile
+compose.yaml
+deploy
+docs
+README.md
