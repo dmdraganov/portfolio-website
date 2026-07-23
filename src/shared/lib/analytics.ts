@@ -10,12 +10,20 @@ export type AnalyticsEvent =
       project?: string;
     }>;
 
-type YandexMetrica = (
-  counterId: number,
-  command: 'reachGoal',
-  goal: string,
-  parameters?: Record<string, string>
-) => void;
+type YandexMetrica = {
+  (
+    counterId: number,
+    command: 'reachGoal',
+    goal: string,
+    parameters?: Record<string, string>
+  ): void;
+  (
+    counterId: number,
+    command: 'hit',
+    path: string,
+    options?: Readonly<{ referer?: string }>
+  ): void;
+};
 
 declare global {
   interface Window {
@@ -61,7 +69,25 @@ export const analytics = Object.freeze({
   },
 
   pageView(path: string, previousUrl?: string): void {
-    void path;
-    void previousUrl;
+    const counterId = getCounterId();
+
+    if (
+      counterId === null ||
+      typeof window === 'undefined' ||
+      window.ym === undefined
+    ) {
+      return;
+    }
+
+    try {
+      window.ym(
+        counterId,
+        'hit',
+        path,
+        previousUrl === undefined ? undefined : { referer: previousUrl }
+      );
+    } catch {
+      // Analytics is optional: failed vendor calls must never affect navigation.
+    }
   },
 });
