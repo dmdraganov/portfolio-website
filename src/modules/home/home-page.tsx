@@ -44,12 +44,12 @@ function ProjectEntry({
         <p className="mt-4 text-ink-muted">{project.card.summary}</p>
       </div>
       <Link
-        className="col-start-3 row-span-3 block overflow-hidden rounded-lg bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-lg:row-auto max-md:col-auto"
+        className="col-start-3 row-span-3 block aspect-[16/10] overflow-hidden rounded-lg bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-lg:row-auto max-md:col-auto"
         href={`/projects/${project.slug}`}
         aria-label={`${project.card.actionLabel}: ${project.name}`}
       >
         <Image
-          className="block h-auto w-full transition-transform duration-[var(--duration-hover)] ease-[var(--ease-out)] motion-reduce:transform-none [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:scale-[1.02]"
+          className="block h-full w-full object-cover object-center transition-transform duration-[var(--duration-hover)] ease-[var(--ease-out)] motion-reduce:transform-none [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:scale-[1.02]"
           src={representativeImage.source}
           alt=""
           sizes="(max-width: 768px) 100vw, 55vw"
