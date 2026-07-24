@@ -64,7 +64,7 @@ function ProjectEntry({
         </Link>
       </div>
       <Link
-        className="block overflow-hidden rounded-lg border border-border bg-surface-raised text-inherit no-underline transition-[border-color] duration-[var(--duration-hover)] ease-[var(--ease-out)] group-focus-within/project:border-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:border-signal max-lg:col-start-2 max-md:col-auto"
+        className="block overflow-hidden rounded-lg bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-md:col-auto"
         href={`/projects/${project.slug}`}
         aria-label={`${project.card.actionLabel}: ${project.name}`}
       >
