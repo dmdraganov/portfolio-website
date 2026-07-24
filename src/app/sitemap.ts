@@ -1,15 +1,15 @@
 import type { MetadataRoute } from 'next';
 
-import { getHomeMetadata, getProjectSlugs } from '../content/selectors';
+import { projects } from '../content/projects';
 import { toCanonicalUrl } from '../shared/lib/url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: toCanonicalUrl(getHomeMetadata().canonicalPath),
+      url: toCanonicalUrl('/'),
     },
-    ...getProjectSlugs().map((slug) => ({
-      url: toCanonicalUrl(`/projects/${slug}`),
+    ...projects.map((project) => ({
+      url: toCanonicalUrl(`/projects/${project.slug}`),
     })),
   ];
 }

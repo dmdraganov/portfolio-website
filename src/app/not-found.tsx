@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
-import { homeContent } from '../content/site';
+import { siteContent } from '../content/site';
 
 export const metadata: Metadata = {
-  title: 'Страница не найдена',
+  title: siteContent.system.notFoundMetadataTitle,
   robots: { index: false, follow: false },
 };
 
 export default function NotFound() {
-  const { system } = homeContent;
+  const { system } = siteContent;
 
   return (
     <main className="page-shell system-page">
@@ -17,7 +17,7 @@ export default function NotFound() {
         <p className="eyebrow">404</p>
         <h1 id="not-found-heading">{system.notFound}</h1>
         <p>{system.notFoundDescription}</p>
-        <nav aria-label="Восстановление навигации">
+        <nav aria-label={system.navigationRecoveryLabel}>
           <Link href="/">{system.homeAction}</Link>
           <Link href="/#projects">{system.projectsAction}</Link>
         </nav>

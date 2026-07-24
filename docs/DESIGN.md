@@ -120,7 +120,7 @@ The semantic roles remain stable even if colors are tuned during implementation:
 
 ## Typography
 
-Geist Sans and Geist Mono already exist in the project and form the type system. Their Cyrillic subsets must be loaded explicitly for the Russian interface. `ui-ux-pro-max` recommended Archivo and Space Grotesk; Geist is retained because it preserves the same minimal portfolio character while reducing font overhead and confirming Cyrillic support. Large display text is the primary visual gesture. Tight leading and tracking make headings feel constructed, while body copy stays calm and readable.
+Geist Sans and Geist Mono form the type system and are loaded through `next/font/google` with explicit Cyrillic and Latin subsets. `ui-ux-pro-max` recommended Archivo and Space Grotesk; Geist is retained because it preserves the same minimal portfolio character while reducing font overhead and confirming Cyrillic support. Large display text is the primary visual gesture. Tight leading and tracking make headings feel constructed, while body copy stays calm and readable.
 
 - Use `display-xl` only for the hero and one high-impact transition statement.
 - Use `display-lg` for project and services section titles.

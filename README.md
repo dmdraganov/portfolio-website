@@ -17,7 +17,7 @@
 - [PRD](docs/prd.md) — функциональные требования, критерии готовности и метрики.
 - [Design Specification](docs/DESIGN.md) — визуальное направление, типографика, цвета и компоненты.
 - [Experience Specification](docs/EXPERIENCE.md) — архитектура страниц, сценарии, адаптивность и анимации.
-- [Content](docs/CONTENT.md) — готовые русскоязычные тексты сайта.
+- [Content](docs/CONTENT.md) — карта канонических русскоязычных текстов.
 - [Design System](docs/design-system/MASTER.md) — правила реализации дизайн-системы.
 - [Home Page Rules](docs/design-system/pages/home.md) — правила главной страницы.
 - [Case Study Rules](docs/design-system/pages/project-case.md) — правила страниц проектов.

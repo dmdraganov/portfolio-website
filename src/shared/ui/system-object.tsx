@@ -2,7 +2,7 @@ export function SystemObject() {
   return (
     <svg
       aria-hidden="true"
-      className="system-object"
+      className="h-auto w-[min(100%,36rem)] stroke-ink stroke-2"
       fill="none"
       viewBox="0 0 480 400"
       xmlns="http://www.w3.org/2000/svg"

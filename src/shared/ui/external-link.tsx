@@ -2,10 +2,12 @@ import type { ComponentProps } from 'react';
 
 type ExternalLinkProps = Omit<ComponentProps<'a'>, 'rel' | 'target'> & {
   newTab?: boolean;
+  newTabDescription: string;
 };
 
 export function ExternalLink({
   newTab = true,
+  newTabDescription,
   children,
   ...props
 }: ExternalLinkProps) {
@@ -16,9 +18,7 @@ export function ExternalLink({
       rel={newTab ? 'noopener noreferrer' : undefined}
     >
       {children}
-      {newTab ? (
-        <span className="sr-only"> (Откроется в новой вкладке)</span>
-      ) : null}
+      {newTab ? <span className="sr-only"> ({newTabDescription})</span> : null}
     </a>
   );
 }

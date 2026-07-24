@@ -196,7 +196,7 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 - Weather Application: overview desktop, overview mobile, search/map, hourly chart, theme or localization, and one architecture/integration visual.
 - Sound Engineer Website: home desktop, mobile page, audio player states, portfolio/media page, modal or tabs, and one full-page composition.
 - Each asset has a short caption explaining why it matters; captions do not merely name the screen.
-- Source content and final copy are specified in `CONTENT.md`.
+- Source content and final copy live in `src/content/site.ts` and `src/content/projects.ts`; `CONTENT.md` maps those editorial surfaces.
 
 ## Open Implementation Inputs
 

@@ -1,41 +1,43 @@
 import type { Metadata } from 'next';
 
-import type { MetadataModel } from '../../content/contracts';
-import { mediaById } from '../../content/media';
+import type { PageSeo } from '../../content/define';
 import { toCanonicalUrl } from '../../shared/lib/url';
 
-export function toPageMetadata(model: MetadataModel): Metadata {
-  const image = mediaById[model.openGraphImageId];
+type PageMetadataInput = Readonly<{
+  path: '/' | `/projects/${string}`;
+  seo: PageSeo;
+}>;
 
-  if (image === undefined) {
-    throw new Error(
-      `Missing Open Graph media asset: ${model.openGraphImageId}.`
-    );
+export function toPageMetadata({ path, seo }: PageMetadataInput): Metadata {
+  const canonical = toCanonicalUrl(path);
+  const imagePath = seo.image?.source.src;
+
+  if (imagePath !== undefined && !imagePath.startsWith('/')) {
+    throw new Error(`Open Graph image must use a site path: ${imagePath}.`);
   }
 
-  const canonical = toCanonicalUrl(model.canonicalPath);
-
   return {
-    title: model.title,
-    description: model.description,
+    title: seo.title,
+    description: seo.description,
     alternates: { canonical },
-    robots: model.index
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
+    robots: { index: true, follow: true },
     openGraph: {
       type: 'website',
-      locale: model.locale,
+      locale: 'ru_RU',
       url: canonical,
-      title: model.title,
-      description: model.description,
-      images: [
-        {
-          url: toCanonicalUrl(image.path),
-          width: image.width,
-          height: image.height,
-          alt: model.openGraphAlt,
-        },
-      ],
+      title: seo.title,
+      description: seo.description,
+      images:
+        seo.image === undefined
+          ? undefined
+          : [
+              {
+                url: toCanonicalUrl(imagePath as `/${string}`),
+                width: seo.image.source.width,
+                height: seo.image.source.height,
+                alt: seo.image.alt,
+              },
+            ],
     },
   };
 }

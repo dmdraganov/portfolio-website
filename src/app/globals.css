@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 :root {
   color-scheme: light;
@@ -19,25 +21,11 @@
   --surface: var(--color-surface-light);
   --surface-raised: var(--color-surface-raised-light);
   --ink: var(--color-ink-light);
-  --muted: var(--color-muted-light);
+  --ink-muted: var(--color-muted-light);
   --border: var(--color-border-light);
 
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 3rem;
-  --space-8: 4rem;
-  --space-9: 6rem;
   --space-section: clamp(6rem, 12vw, 12rem);
   --space-gutter: clamp(1rem, 3vw, 3rem);
-
-  --shape-radius-sm: 0.25rem;
-  --shape-radius-md: 0.625rem;
-  --shape-radius-lg: 1.25rem;
-  --shape-radius-full: 9999px;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -47,20 +35,40 @@
   --duration-ui: 220ms;
   --duration-drawer: 280ms;
   --duration-reveal: 600ms;
-  --stagger-step: 40ms;
+
+  /* shadcn semantic tokens use the portfolio palette. */
+  --background: var(--surface);
+  --foreground: var(--ink);
+  --card: var(--surface-raised);
+  --card-foreground: var(--ink);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--ink);
+  --primary: var(--signal);
+  --primary-foreground: var(--signal-contrast);
+  --secondary: var(--surface-raised);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--surface-raised);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.577 0.245 27.325);
+  --input: var(--border);
+  --ring: var(--signal);
+  --radius: 0.625rem;
 }
 
 @theme inline {
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
   --color-ink: var(--ink);
-  --color-muted: var(--muted);
+  --color-ink-muted: var(--ink-muted);
   --color-border: var(--border);
   --color-signal: var(--signal);
   --color-signal-contrast: var(--signal-contrast);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
 
   --text-display-xl: clamp(3.5rem, 9vw, 9rem);
   --text-display-xl--line-height: 0.88;
@@ -73,184 +81,74 @@
   --text-heading--letter-spacing: -0.035em;
   --text-body-lg: clamp(1.125rem, 1.5vw, 1.5rem);
   --text-body-lg--line-height: 1.45;
-  --text-body: 1rem;
-  --text-body--line-height: 1.6;
   --text-label: 0.75rem;
   --text-label--line-height: 1.4;
   --text-label--letter-spacing: 0.08em;
 
-  --radius-sm: var(--shape-radius-sm);
-  --radius-md: var(--shape-radius-md);
-  --radius-lg: var(--shape-radius-lg);
-  --radius-full: var(--shape-radius-full);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1.25rem;
+  --radius-full: 9999px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 }
 
-*,
-::before,
-::after {
-  box-sizing: border-box;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    min-width: 20rem;
+    @apply font-sans;
+  }
+
+  body {
+    min-height: 100vh;
+    @apply bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 3px;
+  }
 }
 
-html {
-  min-width: 20rem;
-}
-
-body {
-  min-height: 100vh;
-  margin: 0;
-  background: var(--surface);
-  color: var(--ink);
-  font-family:
-    var(--font-geist-sans),
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  text-rendering: optimizeLegibility;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.primary-cta {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--shape-radius-md);
-  background: var(--signal);
+::selection {
+  background: color-mix(in srgb, var(--signal) 58%, transparent);
   color: var(--signal-contrast);
-  padding: var(--space-3) var(--space-5);
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    transform var(--duration-press) var(--ease-out),
-    background-color var(--duration-hover) var(--ease-out);
 }
 
-.primary-cta:active {
-  transform: scale(0.97);
-}
-
-.site-header {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-  display: flex;
-  min-height: 4rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  border-bottom: 1px solid var(--border);
-  background-color: color-mix(in srgb, var(--surface) 92%, transparent);
-  padding-inline: var(--space-gutter);
-}
-
-.site-header__brand {
-  color: inherit;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.site-header__canonical-navigation ul,
-.mobile-navigation__sheet ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.site-header__canonical-navigation a,
-.mobile-navigation__sheet a {
-  color: inherit;
-  text-underline-offset: 0.25em;
-}
-
-.mobile-navigation__trigger,
-.mobile-navigation__sheet button {
-  min-height: 2.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--shape-radius-md);
-  background: var(--surface-raised);
-  color: inherit;
-  padding-inline: var(--space-3);
-  font: inherit;
+[data-surface='inverse'] {
+  color-scheme: dark;
+  --surface: var(--color-surface-dark);
+  --surface-raised: var(--color-surface-raised-dark);
+  --ink: var(--color-ink-dark);
+  --ink-muted: var(--color-muted-dark);
+  --border: var(--color-border-dark);
 }
 
 .mobile-navigation__trigger {
   display: none;
-}
-
-.mobile-navigation__backdrop {
-  position: fixed;
-  z-index: 10;
-  inset: 0;
-  display: flex;
-  justify-content: flex-end;
-  background: color-mix(in srgb, var(--color-surface-dark) 52%, transparent);
-}
-
-.mobile-navigation__sheet {
-  width: min(100%, 26rem);
-  min-height: 100%;
-  background: var(--surface-raised);
-  padding: var(--space-5);
-  animation: mobile-sheet-enter var(--duration-drawer) var(--ease-drawer);
-}
-
-.mobile-navigation__sheet-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  border-bottom: 1px solid var(--border);
-  padding-bottom: var(--space-4);
-}
-
-.mobile-navigation__sheet-header p {
-  margin: 0;
-  font-weight: 600;
-}
-
-.mobile-navigation__sheet nav {
-  margin-top: var(--space-6);
-}
-
-.mobile-navigation__sheet ul {
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.system-object {
-  width: min(100%, 30rem);
-  height: auto;
-  stroke: var(--ink);
-  stroke-width: 2;
-}
-
-@keyframes mobile-sheet-enter {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
 }
 
 @media (max-width: 47.999rem) {
@@ -261,27 +159,7 @@ body {
   html[data-navigation-enhancement='ready']
     .mobile-navigation__trigger:not([hidden]) {
     display: inline-flex;
-    align-items: center;
   }
-}
-
-::selection {
-  background: var(--signal);
-  color: var(--signal-contrast);
-}
-
-:focus-visible {
-  outline: 3px solid var(--signal);
-  outline-offset: 3px;
-}
-
-[data-surface='inverse'] {
-  color-scheme: dark;
-  --surface: var(--color-surface-dark);
-  --surface-raised: var(--color-surface-raised-dark);
-  --ink: var(--color-ink-dark);
-  --muted: var(--color-muted-dark);
-  --border: var(--color-border-dark);
 }
 
 @media (prefers-reduced-motion: reduce) {

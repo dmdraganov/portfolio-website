@@ -11,7 +11,7 @@ sources:
 
 ## 0. Document Purpose
 
-This document defines the MVP behavior, content surfaces, quality requirements, and acceptance criteria for Dmitry Draganov's Russian-language freelance portfolio. It is the implementation contract for product, design, development, content, and QA. Visual decisions live in `DESIGN.md`; information architecture and interaction behavior live in `EXPERIENCE.md`; final Russian copy lives in `CONTENT.md`.
+This document defines the MVP behavior, content surfaces, quality requirements, and acceptance criteria for Dmitry Draganov's Russian-language freelance portfolio. It is the implementation contract for product, design, development, content, and QA. Visual decisions live in `DESIGN.md`; information architecture and interaction behavior live in `EXPERIENCE.md`; final Russian copy lives in `src/content/site.ts` and `src/content/projects.ts`, with `CONTENT.md` as their editorial map.
 
 ## 1. Vision
 

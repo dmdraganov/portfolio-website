@@ -44,7 +44,7 @@ The product is a **server-first modular monolith with progressive-enhancement is
 
 - **Binds:** all source units
 - **Prevents:** page concerns leaking into generic components, circular ownership, and cross-module coupling
-- **Rule:** Dependencies flow `app -> modules -> content/shared`; `app` may also read `content` and `shared`. `content/contracts.ts` owns canonical record/render-model types and `content/selectors.ts` alone owns registry lookup and cross-surface projections. Route adapters resolve params and pass readonly render models into modules; modules may import content contract types but not registries or selectors. `shared` imports no route, module, or content record. Modules never import other modules. A client island stays beside its owning module until at least two modules require the same behavioral contract.
+- **Rule:** Dependencies flow `app -> modules -> content/shared`; `app` may also read `content` and `shared`. `content/site.ts` owns site-wide and Home copy, `content/projects.ts` owns the ordered project collection and its lookups, and `content/define.ts` owns the small reusable project contract. Server modules may import these immutable records directly; route adapters use the same collection for static params and metadata. `shared` imports no route, module, or content record, so shared primitives receive labels through props. Modules never import other modules. A client island stays beside its owning module until at least two modules require the same behavioral contract.
 
 ```mermaid
 flowchart LR
@@ -60,7 +60,7 @@ flowchart LR
 
 - **Binds:** FR-2, FR-6..FR-9, FR-12, FR-16, FR-17
 - **Prevents:** approved copy, Home, case pages, metadata, sitemap, analytics, and next-project navigation disagreeing
-- **Rule:** `docs/CONTENT.md` is the editorial approval authority; readonly TypeScript site, Home, contact, service, and project records are its executable projection and change with it in the same reviewed change. Prose uses readonly ordered paragraph blocks whose inline tokens are a closed `text | emphasis | link` union; arbitrary HTML and Markdown-at-runtime are forbidden. Projection preserves approved words, punctuation, emphasis, link labels/targets, and paragraph boundaries exactly after only CRLF-to-LF and Unicode-NFC normalization; it performs no smart-punctuation, whitespace, or case rewriting. Metadata descriptions are separately approved fields, never body-copy truncations. Any other textual or structural change requires editorial reapproval and a validator snapshot update. Home order is header, hero, projects, services, process, about, capabilities, final CTA/footer. Case Study order is back/index, opening facts/actions, representative media, challenge, solution/features, technical decisions/stack, ordered gallery, next-project/contact. Visual layout never changes DOM order. Each Case Study requires role, task, solution, features, technical decisions, stack, 4–6 ordered proof assets, demo, repository, contact CTA, metadata, and next-project navigation. The project registry drives `generateStaticParams`; `dynamicParams` is false and unknown slugs call `notFound()`. Navigable HTML routes are exactly `/`, `/projects/weather-app`, and `/projects/sound-engineer`; metadata endpoints, static/framework assets, and the private health endpoint are separate route classes. One `app/_lib/metadata.ts` mapper consumes selector-produced metadata models for page metadata, canonical/alternate URLs, Open Graph, sitemap, and robots. Its required schema is title, description, canonical path, `ru_RU` locale, index policy, and an Open Graph image with URL, dimensions, and Russian alt; missing values fail validation, with no implicit fallback. The localized static not-found page is non-indexable and never receives project metadata.
+- **Rule:** `content/site.ts` and `content/projects.ts` are the editorial approval authority and the executable source consumed by routes and modules; `docs/CONTENT.md` maps these surfaces without duplicating their copy. Components contain structure, not approved visitor-facing strings. Metadata descriptions are separately approved fields, never body-copy truncations. Home order is header, hero, projects, services, process, about, capabilities, final CTA/footer. Case Study order is back/index, opening facts/actions, representative media, challenge, solution/features, technical decisions/stack, ordered gallery, next-project/contact. Visual layout never changes DOM order. Each Case Study requires role, task, solution, features, technical decisions, stack, 4–6 ordered proof assets, demo, repository, contact CTA, metadata, and next-project navigation. The single ordered `projects` array drives Home cards, `generateStaticParams`, sitemap, lookup, and next-project navigation; `dynamicParams` is false and unknown slugs call `notFound()`. Navigable HTML routes are exactly `/`, `/projects/weather-app`, and `/projects/sound-engineer`; metadata endpoints, static/framework assets, and the private health endpoint are separate route classes. One `app/_lib/metadata.ts` mapper combines approved SEO fields with a route-derived path, fixed `ru_RU` locale and index policy. Open Graph media remains optional in local/test builds while final assets are outstanding and is required by the release gate.
 
 ### AD-4 — Content is build-owned, not runtime data
 
@@ -80,11 +80,11 @@ flowchart LR
 - **Prevents:** accessibility, responsive behavior, or performance becoming per-component interpretation
 - **Rule:** Every module works at 320px+, with keyboard and touch, visible focus, semantic landmarks, one non-skipping heading hierarchy, Russian document metadata, and operating-system Reduced Motion. Interactive targets are at least 24×24 CSS px; primary touch actions prefer 44×44. Motion may explain state or provide feedback only; no scroll capture, infinite animation, layout-property animation, `transition: all`, or essential hover-only information. The newer static-MVP decision supersedes the source design's interactive four-state 3D renderer: one static SVG/image/CSS composition retains the assembly/repair metaphor, changes no state, and ships no WebGL or 3D dependency.
 
-### AD-7 — Media dimensions and meaning are manifest data
+### AD-7 — Media dimensions are derived; meaning stays with usage
 
 - **Binds:** FR-2, FR-5, FR-9, NFR-2, NFR-3
-- **Prevents:** broken public paths, layout shift, and media whose alternative text or caption drifts from its purpose
-- **Rule:** Repository-owned media lives under `public/` and is referenced by stable media IDs. Asset records own path, MIME/format, byte identity, and actual intrinsic dimensions; contextual usage records own Russian `alt`, decision/interaction-focused `caption`, `purpose`, and proof role. Each project supplies 4–6 ordered, non-placeholder production assets covering desktop, mobile, and a defining interaction; portrait records include desktop and mobile crops. The validator checks case-sensitive paths, uniqueness, allowed formats, decodability, corruption, and actual dimensions/aspect ratio against declarations. It also blocks raster sources above 750 KiB, SVG sources above 100 KiB, Open Graph images above 400 KiB, or an aggregate `public/media` payload above 6 MiB; the mobile-profile LCP image response must remain at or below 200 KiB. Card frames and Case Study media own distinct presentation ratios.
+- **Prevents:** broken public paths, manual technical metadata, layout shift, duplicate assets, and media whose alternative text or caption drifts from its use
+- **Rule:** Repository-owned media lives under `public/media` and is statically imported beside the project or site record that gives it meaning. A gallery item owns one `StaticImageData` source, Russian `alt`, and decision/interaction-focused caption; no parallel media ID, path registry, declared dimensions, byte count, MIME field, or stored hash exists. Next.js static imports provide verified intrinsic dimensions to `next/image` and make missing or undecodable references fail the build. Each project supplies 4–6 ordered, non-placeholder production assets covering desktop, mobile, and a defining interaction. A portrait uses one adaptable source when its crop works at every breakpoint; separate crops are introduced only when art direction requires them. `scripts/check-media.ts` independently scans real files for allowed formats, decodability, intrinsic dimensions, per-file budgets, aggregate payload, and byte-identical duplicates. Duplicate content warns during local work and blocks `BUILD_PROFILE=release`. Raster sources above 750 KiB, SVG sources above 100 KiB, Open Graph files prefixed `og-` above 400 KiB, or an aggregate `public/media` payload above 6 MiB block the build. Card frames and Case Study media own distinct presentation ratios.
 
 ### AD-8 — Analytics cannot own navigation
 
@@ -96,7 +96,7 @@ flowchart LR
 
 - **Binds:** all modules and shared UI
 - **Prevents:** unnecessary client bundles, competing primitive libraries, and styling that diverges from the approved design system
-- **Rule:** Root global styles own semantic color, typography, spacing, radius, focus, and motion tokens plus one Reduced Motion policy; modules and copied primitives consume them. The root loads the official full-glyph Geist package for Cyrillic Sans/Mono with stable fallbacks and non-blocking display. Use semantic HTML and explicit Tailwind/CSS transitions first. Enhanced navigation must meet the Sheet behavior contract; a shipped media viewer must meet Dialog-equivalent Escape, focus-containment/return, centered transform-origin, and browser-zoom contracts. External links expose destination type and announce new-tab behavior. Add Motion only when runtime input, a spring, or coordinated interruptible choreography cannot be expressed cleanly with CSS or WAAPI. No dependency is installed speculatively.
+- **Rule:** Root global styles own semantic color, typography, spacing, radius, focus, and motion tokens plus one Reduced Motion policy; modules and copied primitives consume them. The root loads the Cyrillic and Latin subsets of Geist Sans/Mono through `next/font/google`; Next.js self-hosts the resulting assets with stable fallbacks and non-blocking display. Use semantic HTML and explicit Tailwind/CSS transitions first. Enhanced navigation must meet the Sheet behavior contract; a shipped media viewer must meet Dialog-equivalent Escape, focus-containment/return, centered transform-origin, and browser-zoom contracts. External links expose destination type and announce new-tab behavior. Add Motion only when runtime input, a spring, or coordinated interruptible choreography cannot be expressed cleanly with CSS or WAAPI. No dependency is installed speculatively.
 
 ### AD-10 — Build-time configuration has a single owner
 
@@ -118,37 +118,36 @@ flowchart LR
 
 ## Consistency Conventions
 
-| Concern | Convention |
-| --- | --- |
-| Naming | Route and content slugs are lower kebab-case; React components are PascalCase; module folders name product areas; analytics keys use `<surface>_<destination>` from a closed union. |
-| Content | `docs/CONTENT.md` is the approval authority; readonly TypeScript projections contain no JSX or vendor calls and change in the same review. Commercial facts, contact destinations, required evidence, and negative-claim constraints are validated data, never component literals. |
-| Links | Internal navigation uses `next/link`; tracked internal destinations compose it through `TrackedLink`. External HTTPS destinations open in a new tab with visible/assistive destination signaling and `rel="noopener noreferrer"`; `mailto:` keeps native same-context handling. Destination URLs come from content/config, never component literals. |
-| Media | Public URLs begin with `/media/`; asset records own file facts and usage records own contextual meaning; `next/image` reserves verified dimensions and below-fold assets are lazy by default. |
-| State | Server data is immutable; client state is local and ephemeral; the URL owns navigation state; analytics is fire-and-forget. |
-| Failure | Invalid content/config fails the build. Optional analytics and interaction enhancement fail open to semantic HTML. Dead external links and development media placeholders block release rather than producing production error UI. |
-| Configuration | `BUILD_PROFILE=release` validates and bakes public production configuration at image build; local/test analytics is disabled; no public value is duplicated in Nginx and application config. |
-| Observability | Nginx access/error logs and container stdout/stderr are the MVP operational record. The internal health check verifies `/healthz` status and build ID; the release smoke check verifies the rendered Home route and representative framework/media assets. |
+| Concern       | Convention                                                                                                                                                                                                                                                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Naming        | Route and content slugs are lower kebab-case; React components are PascalCase; module folders name product areas; analytics keys use `<surface>_<destination>` from a closed union.                                                                                                                                                                  |
+| Content       | `content/site.ts` and `content/projects.ts` are the approval authority; `docs/CONTENT.md` maps them without duplicating copy. Commercial facts, contact destinations, required evidence, and negative-claim constraints are data, never component literals.                                                                                          |
+| Links         | Internal navigation uses `next/link`; tracked internal destinations compose it through `TrackedLink`. External HTTPS destinations open in a new tab with visible/assistive destination signaling and `rel="noopener noreferrer"`; `mailto:` keeps native same-context handling. Destination URLs come from content/config, never component literals. |
+| Media         | Files live under `public/media` and are statically imported beside contextual alt/caption copy; Next.js derives dimensions and `check-media.ts` enforces file budgets and integrity.                                                                                                                                                                 |
+| State         | Server data is immutable; client state is local and ephemeral; the URL owns navigation state; analytics is fire-and-forget.                                                                                                                                                                                                                          |
+| Failure       | Invalid content/config fails the build. Optional analytics and interaction enhancement fail open to semantic HTML. Dead external links and development media placeholders block release rather than producing production error UI.                                                                                                                   |
+| Configuration | `BUILD_PROFILE=release` validates and bakes public production configuration at image build; local/test analytics is disabled; no public value is duplicated in Nginx and application config.                                                                                                                                                         |
+| Observability | Nginx access/error logs and container stdout/stderr are the MVP operational record. The internal health check verifies `/healthz` status and build ID; the release smoke check verifies the rendered Home route and representative framework/media assets.                                                                                           |
 
 ## Stack
 
 Reviewed implementation baseline:
 
-| Name | Version | State |
-| --- | --- | --- |
-| Node.js | 24.18.0 LTS | planned Docker runtime |
-| Next.js | 16.2.11 | locked |
-| PostCSS | 8.5.22 | security override, exact-locked |
-| sharp | 0.35.3 | security override, exact-locked |
-| React | 19.2.4 | locked |
-| React DOM | 19.2.4 | locked |
-| TypeScript | 5.9.3 | locked |
-| Tailwind CSS | 4.3.3 | locked |
-| `geist` | 1.7.2 | required, then exact-lock |
-| ESLint | 9.39.5 | locked |
-| Prettier | 3.9.6 | locked |
-| `@playwright/test` | 1.61.1 | required, then exact-lock |
-| `@axe-core/playwright` | 4.12.1 | required, then exact-lock |
-| Nginx | 1.30.4 stable | planned proxy image |
+| Name                   | Version       | State                           |
+| ---------------------- | ------------- | ------------------------------- |
+| Node.js                | 24.18.0 LTS   | planned Docker runtime          |
+| Next.js                | 16.2.11       | locked                          |
+| PostCSS                | 8.5.22        | security override, exact-locked |
+| sharp                  | 0.35.3        | security override, exact-locked |
+| React                  | 19.2.4        | locked                          |
+| React DOM              | 19.2.4        | locked                          |
+| TypeScript             | 5.9.3         | locked                          |
+| Tailwind CSS           | 4.3.3         | locked                          |
+| ESLint                 | 9.39.5        | locked                          |
+| Prettier               | 3.9.6         | locked                          |
+| `@playwright/test`     | 1.61.1        | required, then exact-lock       |
+| `@axe-core/playwright` | 4.12.1        | required, then exact-lock       |
+| Nginx                  | 1.30.4 stable | planned proxy image             |
 
 Every planned row is installed and exact-locked before its gate runs. All rows receive a patch/security review before first release; upgrades pass the full gate rather than following `latest` automatically.
 
@@ -157,20 +156,16 @@ Every planned row is installed and exact-locked before its gate runs. All rows r
 ```text
 src/
   app/                         # routes, metadata, sitemap, robots, composition
-    _lib/metadata.ts           # sole Next metadata/OG/sitemap projection mapper
+    _lib/metadata.ts           # sole Next page metadata/OG mapper
     healthz/route.ts           # private status and source commit build ID
     projects/[slug]/           # registry-backed static Case Study route
   modules/
     home/                      # Home sections and owned islands
     case-study/                # shared Case Study renderer and owned islands
   content/
-    contracts.ts               # canonical content and render-model types
-    selectors.ts               # registry lookup and cross-surface projections
-    site.ts                    # Home metadata, navigation, contact, service copy
-    home.ts                    # fixed Home section content projection
-    projects/                  # approved per-project records
-    registry.ts                # ordered project source of truth
-    media.ts                   # asset and contextual-usage contracts
+    define.ts                  # small project/content contracts and assertions
+    site.ts                    # approved site, Home, UI and system copy
+    projects.ts                # approved ordered project records and lookups
   shared/
     config/build.ts            # sole strict build-profile/environment parser
     lib/analytics/             # vendor adapter and event contract
@@ -179,7 +174,7 @@ src/
 public/
   media/                       # portrait, project, and social assets
 scripts/
-  validate-content-media.*     # build-boundary validation
+  check-media.ts               # file integrity and byte-budget validation
 tests/
   e2e/                         # cross-route acceptance checks
   performance/                 # versioned lab profile and raw evidence
@@ -200,15 +195,15 @@ flowchart LR
 
 ## Capability → Architecture Map
 
-| Capability / Area | Lives in | Governed by |
-| --- | --- | --- |
-| Home narrative, services, process, about | `modules/home`, `content` | AD-1, AD-2, AD-3, AD-6 |
-| Project discovery and two Case Studies | `content/projects`, `content/registry.ts`, `modules/case-study`, `app/projects/[slug]` | AD-2, AD-3, AD-4, AD-7 |
-| Contact and external destinations | `shared/ui/TrackedLink`, `shared/lib/analytics`, `content` | AD-1, AD-8 |
-| Motion and system-object identity | owning module islands and static media | AD-1, AD-6, AD-9 |
-| SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config | AD-3, AD-4, AD-10, AD-12 |
-| Responsive, accessible, resilient experience | modules, shared UI, e2e gate | AD-1, AD-6, AD-7, AD-12 |
-| VPS production delivery | Dockerfile, Compose, Nginx config | AD-10, AD-11, AD-12 |
+| Capability / Area                               | Lives in                                                           | Governed by              |
+| ----------------------------------------------- | ------------------------------------------------------------------ | ------------------------ |
+| Home narrative, services, process, about        | `modules/home`, `content`                                          | AD-1, AD-2, AD-3, AD-6   |
+| Project discovery and two Case Studies          | `content/projects.ts`, `modules/case-study`, `app/projects/[slug]` | AD-2, AD-3, AD-4, AD-7   |
+| Contact and external destinations               | `shared/ui/TrackedLink`, `shared/lib/analytics`, `content`         | AD-1, AD-8               |
+| Motion and system-object identity               | owning module islands and static media                             | AD-1, AD-6, AD-9         |
+| SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config                           | AD-3, AD-4, AD-10, AD-12 |
+| Responsive, accessible, resilient experience    | modules, shared UI, e2e gate                                       | AD-1, AD-6, AD-7, AD-12  |
+| VPS production delivery                         | Dockerfile, Compose, Nginx config                                  | AD-10, AD-11, AD-12      |
 
 ## Deferred
 
