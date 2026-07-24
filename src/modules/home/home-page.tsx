@@ -27,7 +27,7 @@ function ProjectEntry({
   const representativeImage = project.gallery[0];
 
   return (
-    <article className="grid grid-cols-[auto_minmax(14rem,0.7fr)_minmax(20rem,1.3fr)] items-start gap-[clamp(1.5rem,4vw,5rem)] border-t border-border py-[clamp(2rem,5vw,5rem)] last:border-b max-lg:grid-cols-[auto_minmax(0,1fr)] max-md:grid-cols-1">
+    <article className="group/project grid grid-cols-[auto_minmax(14rem,0.7fr)_minmax(20rem,1.3fr)] items-start gap-[clamp(1.5rem,4vw,5rem)] border-t border-border py-[clamp(2rem,5vw,5rem)] transition-[border-color] duration-[var(--duration-hover)] ease-[var(--ease-out)] last:border-b focus-within:border-signal [@media(hover:hover)_and_(pointer:fine)]:hover:border-signal max-lg:grid-cols-[auto_minmax(0,1fr)] max-md:grid-cols-1">
       <div
         className="order-[-1] font-mono text-[clamp(1.25rem,2vw,2rem)] text-signal md:order-0"
         aria-hidden="true"
@@ -38,7 +38,7 @@ function ProjectEntry({
         <p className={sectionLabelClass}>
           {home.projects.itemLabel} {projectNumber}
         </p>
-        <h3 className="text-[clamp(1.8rem,3.2vw,3.6rem)] tracking-[-0.05em] leading-[0.94]">
+        <h3 className="text-[clamp(1.8rem,3.2vw,3.6rem)] tracking-[-0.05em] leading-[0.94] transition-colors duration-[var(--duration-hover)] ease-[var(--ease-out)] group-focus-within/project:text-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:text-signal">
           {project.name}
         </h3>
         <p className="mt-4 text-ink-muted">{project.card.summary}</p>
@@ -55,18 +55,21 @@ function ProjectEntry({
             </li>
           ))}
         </ul>
-        <Link className={textLinkClass} href={`/projects/${project.slug}`}>
+        <Link
+          className={`${textLinkClass} group-focus-within/project:text-signal group-focus-within/project:decoration-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:text-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:decoration-signal`}
+          href={`/projects/${project.slug}`}
+        >
           {project.card.actionLabel}
           <span aria-hidden="true"> ↗</span>
         </Link>
       </div>
       <Link
-        className="block overflow-hidden rounded-lg border border-border bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-md:col-auto"
+        className="block overflow-hidden rounded-lg border border-border bg-surface-raised text-inherit no-underline transition-[border-color] duration-[var(--duration-hover)] ease-[var(--ease-out)] group-focus-within/project:border-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:border-signal max-lg:col-start-2 max-md:col-auto"
         href={`/projects/${project.slug}`}
         aria-label={`${project.card.actionLabel}: ${project.name}`}
       >
         <Image
-          className="block h-auto w-full"
+          className="block h-auto w-full transition-transform duration-[var(--duration-hover)] ease-[var(--ease-out)] motion-reduce:transform-none [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:scale-[1.02]"
           src={representativeImage.source}
           alt=""
           sizes="(max-width: 768px) 100vw, 55vw"
