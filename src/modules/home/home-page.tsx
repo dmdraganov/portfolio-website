@@ -29,7 +29,7 @@ function ProjectEntry({
   return (
     <article className="group/project grid grid-cols-[auto_minmax(14rem,0.7fr)_minmax(20rem,1.3fr)] items-start gap-[clamp(1.5rem,4vw,5rem)] border-t border-border py-[clamp(2rem,5vw,5rem)] transition-[border-color] duration-[var(--duration-hover)] ease-[var(--ease-out)] last:border-b focus-within:border-signal [@media(hover:hover)_and_(pointer:fine)]:hover:border-signal max-lg:grid-cols-[auto_minmax(0,1fr)] max-md:grid-cols-1">
       <div
-        className="order-[-1] font-mono text-[clamp(1.25rem,2vw,2rem)] text-signal md:order-0"
+        className="row-span-3 font-mono text-[clamp(1.25rem,2vw,2rem)] text-signal max-lg:row-span-4 max-md:row-auto"
         aria-hidden="true"
       >
         {projectNumber}
@@ -42,29 +42,9 @@ function ProjectEntry({
           {project.name}
         </h3>
         <p className="mt-4 text-ink-muted">{project.card.summary}</p>
-        <ul
-          className="my-6 flex flex-wrap gap-x-3 gap-y-[0.4rem] p-0 font-mono text-xs text-ink-muted"
-          aria-label={`${home.projects.featuresLabel} ${project.name}`}
-        >
-          {project.card.highlights.map((highlight) => (
-            <li
-              className="after:ml-3 after:content-['·'] last:after:content-none"
-              key={highlight}
-            >
-              {highlight}
-            </li>
-          ))}
-        </ul>
-        <Link
-          className={`${textLinkClass} group-focus-within/project:text-signal group-focus-within/project:decoration-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:text-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:decoration-signal`}
-          href={`/projects/${project.slug}`}
-        >
-          {project.card.actionLabel}
-          <span aria-hidden="true"> ↗</span>
-        </Link>
       </div>
       <Link
-        className="block overflow-hidden rounded-lg bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-md:col-auto"
+        className="col-start-3 row-span-3 block overflow-hidden rounded-lg bg-surface-raised text-inherit no-underline max-lg:col-start-2 max-lg:row-auto max-md:col-auto"
         href={`/projects/${project.slug}`}
         aria-label={`${project.card.actionLabel}: ${project.name}`}
       >
@@ -74,6 +54,26 @@ function ProjectEntry({
           alt=""
           sizes="(max-width: 768px) 100vw, 55vw"
         />
+      </Link>
+      <ul
+        className="flex flex-wrap gap-x-3 gap-y-[0.4rem] p-0 font-mono text-xs text-ink-muted"
+        aria-label={`${home.projects.featuresLabel} ${project.name}`}
+      >
+        {project.card.highlights.map((highlight) => (
+          <li
+            className="after:ml-3 after:content-['·'] last:after:content-none"
+            key={highlight}
+          >
+            {highlight}
+          </li>
+        ))}
+      </ul>
+      <Link
+        className={`${textLinkClass} group-focus-within/project:text-signal group-focus-within/project:decoration-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:text-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:decoration-signal`}
+        href={`/projects/${project.slug}`}
+      >
+        {project.card.actionLabel}
+        <span aria-hidden="true"> ↗</span>
       </Link>
     </article>
   );
