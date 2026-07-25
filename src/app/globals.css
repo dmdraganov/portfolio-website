@@ -147,21 +147,6 @@
   --border: var(--color-border-dark);
 }
 
-.mobile-navigation__trigger {
-  display: none;
-}
-
-@media (max-width: 47.999rem) {
-  html[data-navigation-enhancement='ready'] .site-header__canonical-navigation {
-    display: none;
-  }
-
-  html[data-navigation-enhancement='ready']
-    .mobile-navigation__trigger:not([hidden]) {
-    display: inline-flex;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

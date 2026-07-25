@@ -19,10 +19,7 @@ export function SiteHeader({ brand, items, labels }: SiteHeaderProps) {
         <Link className="font-semibold text-inherit no-underline" href="/">
           {brand}
         </Link>
-        <nav
-          aria-label={labels.navigation}
-          className="site-header__canonical-navigation"
-        >
+        <nav aria-label={labels.navigation} data-slot="canonical-navigation">
           <ul className="flex flex-wrap gap-3 p-0">
             {items.map((item) => (
               <li key={item.href}>

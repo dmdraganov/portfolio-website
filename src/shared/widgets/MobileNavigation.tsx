@@ -13,6 +13,8 @@ import {
   SheetTrigger,
 } from '@/shared/ui/Sheet';
 
+import styles from './MobileNavigation.module.css';
+
 type MobileNavigationProps = Readonly<{
   items: readonly Readonly<{ label: string; href: string }>[];
   labels: Readonly<{
@@ -54,7 +56,7 @@ export function MobileNavigation({ items, labels }: MobileNavigationProps) {
           <Button
             ref={triggerRef}
             aria-label={labels.menu}
-            className="mobile-navigation__trigger size-11"
+            className={`${styles.trigger} size-11`}
             hidden
             size="icon-lg"
             type="button"

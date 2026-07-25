@@ -1,0 +1,14 @@
+.trigger {
+  display: none;
+}
+
+@media (max-width: 47.999rem) {
+  :global(html[data-navigation-enhancement='ready'])
+    :global([data-slot='canonical-navigation']) {
+    display: none;
+  }
+
+  :global(html[data-navigation-enhancement='ready']) .trigger:not([hidden]) {
+    display: inline-flex;
+  }
+}
