@@ -31,7 +31,7 @@ export function AboutSection() {
           <h2 id="about-title" className={sectionHeadingClass}>
             {homeContent.about.heading}
           </h2>
-          <p className="max-w-[47rem]">{homeContent.about.text}</p>
+          <p className="mt-6 max-w-[47rem]">{homeContent.about.text}</p>
           <h3 className="mt-8 text-base">
             {homeContent.about.principlesHeading}
           </h3>

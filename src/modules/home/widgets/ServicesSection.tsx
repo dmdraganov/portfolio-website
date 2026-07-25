@@ -36,7 +36,9 @@ export function ServicesSection() {
                 <h3 className="text-[clamp(1.35rem,2vw,2rem)] tracking-[-0.035em]">
                   {item.title}
                 </h3>
-                <p className="mb-0 max-w-[45rem] text-ink-muted">{item.text}</p>
+                <p className="mt-6 mb-0 max-w-[45rem] text-ink-muted">
+                  {item.text}
+                </p>
               </div>
             </li>
           ))}
