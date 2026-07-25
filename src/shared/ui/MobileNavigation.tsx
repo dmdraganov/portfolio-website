@@ -4,14 +4,14 @@ import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/shared/ui/sheet';
+} from '@/shared/ui/Sheet';
 
 type MobileNavigationProps = Readonly<{
   items: readonly Readonly<{ label: string; href: string }>[];

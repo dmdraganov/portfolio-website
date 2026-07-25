@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { cn } from '@/shared/lib/utils';
 
-import { TrackedLink } from './tracked-link';
+import { TrackedLink } from './TrackedLink';
 
 type PrimaryCtaProps = Omit<ComponentProps<typeof TrackedLink>, 'className'>;
 

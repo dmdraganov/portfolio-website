@@ -4,9 +4,9 @@ import Link from 'next/link';
 import type { Project } from '@/content/projects';
 import { projects } from '@/content/projects';
 import { siteContent } from '@/content/site';
-import { ExternalLink } from '@/shared/ui/external-link';
-import { PrimaryCta } from '@/shared/ui/primary-cta';
-import { SystemObject } from '@/shared/ui/system-object';
+import { ExternalLink } from '@/shared/ui/ExternalLink';
+import { PrimaryCta } from '@/shared/ui/PrimaryCta';
+import { SystemObject } from '@/shared/ui/SystemObject';
 
 const { contact, home } = siteContent;
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { MobileNavigation } from './mobile-navigation';
+import { MobileNavigation } from './MobileNavigation';
 
 type SiteHeaderProps = Readonly<{
   brand: string;

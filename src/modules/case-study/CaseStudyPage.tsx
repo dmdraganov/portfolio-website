@@ -4,8 +4,8 @@ import Link from 'next/link';
 import type { Project } from '@/content/projects';
 import { getNextProject } from '@/content/projects';
 import { siteContent } from '@/content/site';
-import { PrimaryCta } from '@/shared/ui/primary-cta';
-import { TrackedLink } from '@/shared/ui/tracked-link';
+import { PrimaryCta } from '@/shared/ui/PrimaryCta';
+import { TrackedLink } from '@/shared/ui/TrackedLink';
 
 const { caseStudy, common, contact } = siteContent;
 

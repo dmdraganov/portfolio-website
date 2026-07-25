@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { getProject, projects } from '@/content/projects';
-import { CaseStudyPage } from '@/modules/case-study/case-study-page';
+import { CaseStudyPage } from '@/modules/case-study/CaseStudyPage';
 
 import { toPageMetadata } from '../../_lib/metadata';
 
