@@ -1,15 +1,13 @@
 import Image from 'next/image';
 
 import type { Project } from '@/content/projects';
-import { siteContent } from '@/content/site';
+import { caseStudyContent } from '@/content/case-study';
 
 import {
   pageContainerClass,
   sectionHeadingClass,
   sectionLabelClass,
 } from '../styles';
-
-const { caseStudy } = siteContent;
 
 export function CaseGallery({ project }: Readonly<{ project: Project }>) {
   const galleryImages = project.gallery.slice(1);
@@ -19,9 +17,9 @@ export function CaseGallery({ project }: Readonly<{ project: Project }>) {
       className={`${pageContainerClass} mt-[clamp(4rem,8vw,8rem)]`}
       aria-labelledby="gallery-title"
     >
-      <p className={sectionLabelClass}>{caseStudy.galleryLabel}</p>
+      <p className={sectionLabelClass}>{caseStudyContent.galleryLabel}</p>
       <h2 id="gallery-title" className={sectionHeadingClass}>
-        {caseStudy.galleryHeading}
+        {caseStudyContent.galleryHeading}
       </h2>
       <div className="mt-[clamp(3rem,6vw,6rem)] grid gap-[clamp(4rem,7vw,7rem)]">
         {galleryImages.map((image, index) => {

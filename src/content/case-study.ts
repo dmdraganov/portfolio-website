@@ -1,0 +1,15 @@
+export const caseStudyContent = {
+  backAction: 'Все проекты',
+  caseLabel: 'Кейс',
+  roleLabel: 'Роль',
+  stackLabel: 'Стек',
+  storyLabel: 'О проекте',
+  storyHeading: 'Как устроен результат',
+  galleryLabel: 'Экраны проекта',
+  galleryHeading: 'Детали интерфейса',
+  contactLabel: 'Следующий шаг',
+  contactHeading: 'Есть похожая задача?',
+  contactText: 'Расскажите о ней — обсудим требования и подход к реализации.',
+  contactAction: 'Обсудить похожую задачу',
+  nextProject: 'Следующий проект',
+} as const;

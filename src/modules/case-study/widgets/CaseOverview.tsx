@@ -1,15 +1,13 @@
 import Image from 'next/image';
 
 import type { Project } from '@/content/projects';
-import { siteContent } from '@/content/site';
+import { caseStudyContent } from '@/content/case-study';
 
 import {
   pageContainerClass,
   sectionHeadingClass,
   sectionLabelClass,
 } from '../styles';
-
-const { caseStudy } = siteContent;
 
 export function CaseOverview({ project }: Readonly<{ project: Project }>) {
   const representativeImage = project.gallery[0];
@@ -32,9 +30,9 @@ export function CaseOverview({ project }: Readonly<{ project: Project }>) {
         className={`${pageContainerClass} mt-[clamp(4rem,8vw,8rem)] max-w-[52rem]`}
         aria-labelledby="story-title"
       >
-        <p className={sectionLabelClass}>{caseStudy.storyLabel}</p>
+        <p className={sectionLabelClass}>{caseStudyContent.storyLabel}</p>
         <h2 id="story-title" className={sectionHeadingClass}>
-          {caseStudy.storyHeading}
+          {caseStudyContent.storyHeading}
         </h2>
         <p className="mt-6 text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.65]">
           {project.story}

@@ -1,4 +1,5 @@
-import { siteContent } from '@/content/site';
+import { homeContent } from '@/content/home';
+import { sharedSiteContent } from '@/content/site-shared';
 import { ExternalLink } from '@/shared/ui/ExternalLink';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
 
@@ -9,18 +10,23 @@ import {
   textLinkClass,
 } from '../styles';
 
-const { contact, home } = siteContent;
+const { contact, common } = sharedSiteContent;
 
 const contactMethods = [
   [
-    home.contact.methods.telegram,
+    homeContent.contact.methods.telegram,
     contact.telegram.href,
     contact.telegram.label,
     true,
   ],
-  [home.contact.methods.email, contact.email.href, contact.email.label, false],
   [
-    home.contact.methods.github,
+    homeContent.contact.methods.email,
+    contact.email.href,
+    contact.email.label,
+    false,
+  ],
+  [
+    homeContent.contact.methods.github,
     contact.github.href,
     contact.github.label,
     true,
@@ -40,15 +46,15 @@ export function ContactSection() {
           className={`${pageContainerClass} grid grid-cols-[minmax(0,1.25fr)_minmax(14rem,0.75fr)] gap-[clamp(3rem,9vw,10rem)] max-md:grid-cols-1`}
         >
           <div>
-            <p className={sectionLabelClass}>{home.contact.label}</p>
+            <p className={sectionLabelClass}>{homeContent.contact.label}</p>
             <h2
               id="contacts-title"
               className={`${sectionHeadingClass} max-w-[10ch]`}
             >
-              {home.contact.heading}
+              {homeContent.contact.heading}
             </h2>
             <p className="mt-6 max-w-[42rem] text-[clamp(1.0625rem,1.4vw,1.35rem)] text-ink-muted">
-              {home.contact.text}
+              {homeContent.contact.text}
             </p>
           </div>
           <div className="grid content-start justify-items-start gap-6">
@@ -56,14 +62,14 @@ export function ContactSection() {
               href={contact.telegram.href}
               event={{ name: 'footer_telegram' }}
             >
-              {home.contact.primaryAction}
+              {homeContent.contact.primaryAction}
             </PrimaryCta>
             <ExternalLink
               className={textLinkClass}
               href={contact.kwork.href}
-              newTabDescription={siteContent.common.externalLinkDescription}
+              newTabDescription={common.externalLinkDescription}
             >
-              {home.contact.secondaryAction}
+              {homeContent.contact.secondaryAction}
               <span aria-hidden="true"> ↗</span>
             </ExternalLink>
           </div>
@@ -76,7 +82,7 @@ export function ContactSection() {
                 <ExternalLink
                   newTab={newTab}
                   href={href}
-                  newTabDescription={siteContent.common.externalLinkDescription}
+                  newTabDescription={common.externalLinkDescription}
                 >
                   {text}
                 </ExternalLink>
@@ -90,10 +96,10 @@ export function ContactSection() {
           className={`${pageContainerClass} flex justify-between gap-4 border-t border-border py-6 font-mono text-xs text-ink-muted max-md:flex-col max-md:items-start`}
         >
           <span>
-            © {new Date().getFullYear()} {home.footer.owner}
+            © {new Date().getFullYear()} {homeContent.footer.owner}
           </span>
           <a className="text-inherit" href="#home-title">
-            {home.footer.backToTop} <span aria-hidden="true">↑</span>
+            {homeContent.footer.backToTop} <span aria-hidden="true">↑</span>
           </a>
         </div>
       </footer>

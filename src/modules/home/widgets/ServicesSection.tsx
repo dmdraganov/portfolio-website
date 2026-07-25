@@ -1,12 +1,10 @@
-import { siteContent } from '@/content/site';
+import { homeContent } from '@/content/home';
 
 import {
   pageContainerClass,
   sectionHeadingClass,
   sectionLabelClass,
 } from '../styles';
-
-const { home } = siteContent;
 
 export function ServicesSection() {
   return (
@@ -17,16 +15,16 @@ export function ServicesSection() {
     >
       <div className={pageContainerClass}>
         <div className="max-w-[46rem]">
-          <p className={sectionLabelClass}>{home.services.label}</p>
+          <p className={sectionLabelClass}>{homeContent.services.label}</p>
           <h2 id="services-title" className={sectionHeadingClass}>
-            {home.services.heading}
+            {homeContent.services.heading}
           </h2>
           <p className="mt-6 max-w-[42rem] text-[clamp(1.0625rem,1.4vw,1.35rem)] text-ink-muted">
-            {home.services.introduction}
+            {homeContent.services.introduction}
           </p>
         </div>
         <ol className="mt-[clamp(3rem,6vw,6rem)] p-0">
-          {home.services.items.map((item, index) => (
+          {homeContent.services.items.map((item, index) => (
             <li
               className="grid grid-cols-[4rem_minmax(0,1fr)] gap-4 border-t border-border py-6 last:border-b"
               key={item.title}
@@ -44,15 +42,15 @@ export function ServicesSection() {
           ))}
         </ol>
         <p className="mt-6 max-w-[48rem] text-[0.9375rem] text-ink-muted">
-          {home.services.note}
+          {homeContent.services.note}
         </p>
         <div id="process" className="mt-[clamp(4rem,8vw,8rem)] scroll-mt-24">
-          <p className={sectionLabelClass}>{home.process.label}</p>
+          <p className={sectionLabelClass}>{homeContent.process.label}</p>
           <h3 id="process-title" className={sectionHeadingClass}>
-            {home.process.heading}
+            {homeContent.process.heading}
           </h3>
           <ol className="mt-[clamp(3rem,6vw,6rem)] grid grid-cols-3 p-0 max-md:grid-cols-1">
-            {home.process.steps.map((step, index) => (
+            {homeContent.process.steps.map((step, index) => (
               <li
                 className="min-w-0 border-y border-border p-6 [&:not(:first-child)]:border-l max-md:border-l-0! max-md:border-t-0 max-md:first:border-t"
                 key={step.title}
@@ -68,7 +66,7 @@ export function ServicesSection() {
             ))}
           </ol>
           <p className="mt-6 max-w-[52rem] text-[0.9375rem] text-ink-muted">
-            {home.process.note}
+            {homeContent.process.note}
           </p>
         </div>
       </div>

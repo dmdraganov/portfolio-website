@@ -1,12 +1,10 @@
-import { siteContent } from '@/content/site';
+import { homeContent } from '@/content/home';
 
 import {
   pageContainerClass,
   sectionHeadingClass,
   sectionLabelClass,
 } from '../styles';
-
-const { home } = siteContent;
 
 export function CapabilitiesSection() {
   return (
@@ -16,13 +14,13 @@ export function CapabilitiesSection() {
     >
       <div className={pageContainerClass}>
         <div className="max-w-[46rem]">
-          <p className={sectionLabelClass}>{home.capabilities.label}</p>
+          <p className={sectionLabelClass}>{homeContent.capabilities.label}</p>
           <h2 id="capabilities-title" className={sectionHeadingClass}>
-            {home.capabilities.heading}
+            {homeContent.capabilities.heading}
           </h2>
         </div>
         <dl className="mt-[clamp(3rem,6vw,6rem)] grid grid-cols-2 border-t border-border max-lg:grid-cols-1">
-          {home.capabilities.items.map((item) => (
+          {homeContent.capabilities.items.map((item) => (
             <div
               className="grid grid-cols-[minmax(8rem,0.55fr)_1fr] gap-4 border-b border-border py-6 odd:pr-8 even:border-l even:pl-8 max-lg:px-0 max-lg:border-l-0"
               key={item.term}
@@ -33,7 +31,7 @@ export function CapabilitiesSection() {
           ))}
         </dl>
         <p className="mt-6 max-w-[48rem] text-[0.9375rem] text-ink-muted">
-          {home.capabilities.note}
+          {homeContent.capabilities.note}
         </p>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Suspense } from 'react';
 
-import { siteContent } from '../content/site';
+import { sharedSiteContent } from '../content/site-shared';
 import { RouteViewTracker } from '../shared/analytics/RouteViewTracker';
 import { YandexMetrica } from '../shared/analytics/YandexMetrica';
 import { SiteHeader } from '../shared/widgets/SiteHeader';
@@ -31,12 +31,12 @@ export default function RootLayout({
     >
       <body>
         <SiteHeader
-          brand={siteContent.header.brand}
-          items={siteContent.navigation}
+          brand={sharedSiteContent.header.brand}
+          items={sharedSiteContent.navigation}
           labels={{
-            menu: siteContent.header.menuLabel,
-            menuTitle: siteContent.header.menuTitle,
-            navigation: siteContent.header.navigationLabel,
+            menu: sharedSiteContent.header.menuLabel,
+            menuTitle: sharedSiteContent.header.menuTitle,
+            navigation: sharedSiteContent.header.navigationLabel,
           }}
         />
         {children}

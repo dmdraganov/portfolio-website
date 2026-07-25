@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import type { Project } from '@/content/projects';
 import { projects } from '@/content/projects';
-import { siteContent } from '@/content/site';
+import { homeContent } from '@/content/home';
 
 import {
   pageContainerClass,
@@ -11,8 +11,6 @@ import {
   sectionLabelClass,
   textLinkClass,
 } from '../styles';
-
-const { home } = siteContent;
 
 function ProjectEntry({
   project,
@@ -49,7 +47,7 @@ function ProjectEntry({
       </Link>
       <ul
         className="flex flex-wrap gap-x-3 gap-y-[0.4rem] p-0 font-mono text-xs text-ink-muted"
-        aria-label={`${home.projects.featuresLabel} ${project.name}`}
+        aria-label={`${homeContent.projects.featuresLabel} ${project.name}`}
       >
         {project.card.highlights.map((highlight) => (
           <li
@@ -80,9 +78,9 @@ export function ProjectsSection() {
     >
       <div className={pageContainerClass}>
         <div className="max-w-[46rem]">
-          <p className={sectionLabelClass}>{home.projects.label}</p>
+          <p className={sectionLabelClass}>{homeContent.projects.label}</p>
           <h2 id="projects-title" className={sectionHeadingClass}>
-            {home.projects.heading}
+            {homeContent.projects.heading}
           </h2>
         </div>
         <div className="mt-[clamp(3rem,7vw,7rem)]">

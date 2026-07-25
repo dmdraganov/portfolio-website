@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import { siteContent } from '@/content/site';
+import { homeContent } from '@/content/home';
+import { sharedSiteContent } from '@/content/site-shared';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
 
 import { SystemObject } from '../ui/SystemObject';
@@ -10,7 +11,7 @@ import {
   textLinkClass,
 } from '../styles';
 
-const { contact, home } = siteContent;
+const { contact } = sharedSiteContent;
 
 export function HomeHero() {
   return (
@@ -22,25 +23,25 @@ export function HomeHero() {
         className={`${pageContainerClass} hero grid min-h-[calc(100svh-4rem)] grid-cols-[minmax(0,7fr)_minmax(16rem,5fr)] items-center gap-[clamp(2rem,7vw,9rem)] py-[clamp(3rem,6vw,6rem)] max-md:min-h-0 max-md:grid-cols-1`}
       >
         <div>
-          <p className={sectionLabelClass}>{home.hero.eyebrow}</p>
+          <p className={sectionLabelClass}>{homeContent.hero.eyebrow}</p>
           <h1
             id="home-title"
             className="max-w-[9.5ch] text-[clamp(3.25rem,6.5vw,7rem)] font-semibold tracking-[-0.07em] leading-[0.88]"
           >
-            {home.hero.heading}
+            {homeContent.hero.heading}
           </h1>
           <p className="mt-8 max-w-[39rem] text-[clamp(1.15rem,1.7vw,1.5rem)] leading-[1.45]">
-            {home.hero.subheading}
+            {homeContent.hero.subheading}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-6 max-md:[&_.primary-cta]:w-full">
             <PrimaryCta
               href={contact.telegram.href}
               event={{ name: 'hero_telegram' }}
             >
-              {home.hero.primaryAction}
+              {homeContent.hero.primaryAction}
             </PrimaryCta>
             <Link className={textLinkClass} href="#projects">
-              {home.hero.secondaryAction}
+              {homeContent.hero.secondaryAction}
               <span aria-hidden="true"> ↓</span>
             </Link>
           </div>

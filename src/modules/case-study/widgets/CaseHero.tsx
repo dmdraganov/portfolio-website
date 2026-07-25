@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
 import type { Project } from '@/content/projects';
-import { siteContent } from '@/content/site';
+import { caseStudyContent } from '@/content/case-study';
+import { sharedSiteContent } from '@/content/site-shared';
 import { TrackedLink } from '@/shared/ui/TrackedLink';
 
 import {
@@ -10,7 +11,7 @@ import {
   textLinkClass,
 } from '../styles';
 
-const { caseStudy, common } = siteContent;
+const { common } = sharedSiteContent;
 
 function ProjectActions({ project }: Readonly<{ project: Project }>) {
   return (
@@ -47,7 +48,7 @@ export function CaseHero({ project }: Readonly<{ project: Project }>) {
       <div className={`${pageContainerClass} mb-[clamp(2.5rem,6vw,6rem)]`}>
         <Link className={textLinkClass} href="/#projects">
           <span aria-hidden="true">← </span>
-          {caseStudy.backAction}
+          {caseStudyContent.backAction}
         </Link>
       </div>
       <section
@@ -55,7 +56,7 @@ export function CaseHero({ project }: Readonly<{ project: Project }>) {
         aria-labelledby="case-title"
       >
         <p className={sectionLabelClass}>
-          {caseStudy.caseLabel} · {project.name}
+          {caseStudyContent.caseLabel} · {project.name}
         </p>
         <h1
           id="case-title"
@@ -69,11 +70,15 @@ export function CaseHero({ project }: Readonly<{ project: Project }>) {
         <ProjectActions project={project} />
         <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-5 border-y border-border py-6 max-md:grid-cols-1">
           <div>
-            <dt className="text-sm text-ink-muted">{caseStudy.roleLabel}</dt>
+            <dt className="text-sm text-ink-muted">
+              {caseStudyContent.roleLabel}
+            </dt>
             <dd className="mt-2">{project.role}</dd>
           </div>
           <div>
-            <dt className="text-sm text-ink-muted">{caseStudy.stackLabel}</dt>
+            <dt className="text-sm text-ink-muted">
+              {caseStudyContent.stackLabel}
+            </dt>
             <dd className="mt-2">{project.stack.join(' · ')}</dd>
           </div>
         </dl>
