@@ -68,6 +68,8 @@ export function CaseContactSection({
           </div>
           <PrimaryCta
             href={contact.telegram.href}
+            target="_blank"
+            rel="noopener noreferrer"
             event={{ name: 'footer_telegram' }}
           >
             {caseStudyContent.contactAction}

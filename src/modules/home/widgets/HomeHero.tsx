@@ -36,6 +36,8 @@ export function HomeHero() {
           <div className="mt-8 flex flex-wrap items-center gap-6 max-md:[&_.primary-cta]:w-full">
             <PrimaryCta
               href={contact.telegram.href}
+              target="_blank"
+              rel="noopener noreferrer"
               event={{ name: 'hero_telegram' }}
             >
               {homeContent.hero.primaryAction}

@@ -23,7 +23,7 @@ const contactMethods = [
     homeContent.contact.methods.email,
     contact.email.href,
     contact.email.label,
-    false,
+    true,
   ],
   [
     homeContent.contact.methods.github,
@@ -60,6 +60,8 @@ export function ContactSection() {
           <div className="grid content-start justify-items-start gap-6">
             <PrimaryCta
               href={contact.telegram.href}
+              target="_blank"
+              rel="noopener noreferrer"
               event={{ name: 'footer_telegram' }}
             >
               {homeContent.contact.primaryAction}
