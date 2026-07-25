@@ -11,7 +11,8 @@ Prove capability through a readable technical narrative, real interface media, a
 - Narrative width: 760px.
 - Media width: 1200-1440px depending on asset quality.
 - Opening metadata includes role, stack summary, demo, and GitHub before the first long narrative section.
-- Alternate full-width media and narrow explanation; do not turn the page into a masonry gallery.
+- Challenge, solution, defining capabilities, and technical decisions form one compact narrative section rather than separate chapters or a feature list.
+- Follow the compact narrative with the ordered media sequence; do not turn the page into a masonry gallery.
 - Demo, GitHub, and contact actions remain visible text links or buttons.
 
 ## Motion Budget

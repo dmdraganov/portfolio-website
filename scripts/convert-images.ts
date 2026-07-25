@@ -2,7 +2,7 @@ import { mkdir, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-import sharp, { type Sharp } from 'sharp';
+import sharp from 'sharp';
 
 const DEFAULT_SOURCE_DIRECTORY = path.join(
   process.cwd(),

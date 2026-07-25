@@ -17,13 +17,6 @@ const textLinkClass =
   'inline-flex min-h-11 items-center gap-2 font-semibold text-inherit underline decoration-2 decoration-signal underline-offset-[0.35em] transition-[color,text-decoration-color] duration-[var(--duration-hover)] ease-[var(--ease-out)] [@media(hover:hover)_and_(pointer:fine)]:hover:text-signal';
 const sectionHeadingClass =
   'max-w-[18ch] text-[clamp(2rem,4vw,4rem)] tracking-[-0.055em] leading-[1.05]';
-const galleryLayoutClasses = [
-  'max-w-[52rem]',
-  'max-w-[76rem] lg:ml-auto',
-  'max-w-[44rem] lg:ml-[12%]',
-  'max-w-[64rem] lg:ml-auto',
-  'max-w-[50rem]',
-] as const;
 
 function ProjectActions({ project }: Readonly<{ project: Project }>) {
   return (
@@ -111,31 +104,16 @@ export function CaseStudyPage({ project }: Readonly<{ project: Project }>) {
       </figure>
 
       <section
-        className={`${pageContainerClass} mt-[clamp(4rem,8vw,8rem)] grid max-w-[72rem] gap-x-[clamp(3rem,9vw,10rem)] gap-y-[clamp(3rem,5vw,5rem)] lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]`}
-        aria-labelledby="challenge-title"
+        className={`${pageContainerClass} mt-[clamp(4rem,8vw,8rem)] max-w-[52rem]`}
+        aria-labelledby="story-title"
       >
-        <div>
-          <p className={sectionLabelClass}>{caseStudy.taskLabel}</p>
-          <h2 id="challenge-title" className={sectionHeadingClass}>
-            {caseStudy.taskHeading}
-          </h2>
-          <p className="mt-4 leading-[1.55]">{project.task}</p>
-        </div>
-        <div>
-          <p className={sectionLabelClass}>{caseStudy.solutionLabel}</p>
-          <h2 className={sectionHeadingClass}>{caseStudy.solutionHeading}</h2>
-          <p className="mt-4 leading-[1.55]">{project.solution}</p>
-          <ul className="grid gap-3 pl-5 leading-[1.55]">
-            {project.features.map((feature) => (
-              <li key={feature}>{feature}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="max-w-[48rem] lg:col-start-2">
-          <p className={sectionLabelClass}>{caseStudy.technicalLabel}</p>
-          <h2 className={sectionHeadingClass}>{caseStudy.technicalHeading}</h2>
-          <p className="mt-4 leading-[1.55]">{project.technicalDecisions}</p>
-        </div>
+        <p className={sectionLabelClass}>{caseStudy.storyLabel}</p>
+        <h2 id="story-title" className={sectionHeadingClass}>
+          {caseStudy.storyHeading}
+        </h2>
+        <p className="mt-6 text-[clamp(1.0625rem,1.4vw,1.25rem)] leading-[1.65]">
+          {project.story}
+        </p>
       </section>
 
       <section
@@ -146,25 +124,50 @@ export function CaseStudyPage({ project }: Readonly<{ project: Project }>) {
         <h2 id="gallery-title" className={sectionHeadingClass}>
           {caseStudy.galleryHeading}
         </h2>
-        <div className="mt-[clamp(3rem,6vw,6rem)] grid gap-[clamp(3.5rem,7vw,7rem)]">
-          {galleryImages.map((image, index) => (
-            <figure
-              className={
-                galleryLayoutClasses[index % galleryLayoutClasses.length]
-              }
-              key={image.source.src}
-            >
-              <Image
-                className="h-auto w-full rounded-lg border border-border bg-surface-raised"
-                src={image.source}
-                alt={image.alt}
-                sizes="(max-width: 768px) 100vw, 760px"
-              />
-              <figcaption className="mt-3 max-w-[48rem] text-sm text-ink-muted">
-                {image.caption}
-              </figcaption>
-            </figure>
-          ))}
+        <div className="mt-[clamp(3rem,6vw,6rem)] grid gap-[clamp(4rem,7vw,7rem)]">
+          {galleryImages.map((image, index) => {
+            const isPortrait = image.source.height > image.source.width;
+            const isReversed = index % 2 === 1;
+
+            return (
+              <figure
+                className={
+                  isPortrait
+                    ? 'mx-auto grid w-full max-w-[64rem] items-start gap-4 sm:grid-cols-[minmax(18rem,24rem)_minmax(0,1fr)] sm:gap-x-[clamp(1.5rem,4vw,4rem)]'
+                    : 'grid items-start gap-4 lg:grid-cols-12 lg:gap-x-[clamp(2rem,4vw,4rem)]'
+                }
+                key={image.source.src}
+              >
+                <Image
+                  className={`h-auto w-full rounded-lg border border-border bg-surface-raised ${
+                    isPortrait
+                      ? 'sm:col-start-1 sm:row-start-1'
+                      : isReversed
+                        ? 'lg:col-span-9 lg:col-start-4'
+                        : 'lg:col-span-9'
+                  }`}
+                  src={image.source}
+                  alt={image.alt}
+                  sizes={
+                    isPortrait
+                      ? '(max-width: 1023px) 100vw, 420px'
+                      : '(max-width: 1023px) 100vw, 1000px'
+                  }
+                />
+                <figcaption
+                  className={`text-sm text-ink-muted ${
+                    isPortrait
+                      ? 'sm:col-start-2 sm:row-start-1 sm:pt-1'
+                      : isReversed
+                        ? 'lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:pt-1'
+                        : 'lg:col-span-3 lg:col-start-10 lg:row-start-1 lg:pt-1'
+                  }`}
+                >
+                  {image.caption}
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
       </section>
 

@@ -10,6 +10,7 @@
 - Prettier
 - ESLint
 - shadcn/ui
+- Vercel
 
 ## Documentation
 
@@ -28,3 +29,20 @@
 npm install
 npm run dev
 ```
+
+## Deployment
+
+Vercel is the only production deployment target. Connect the repository as a
+Next.js project and keep the default Build Command:
+
+```bash
+npm run build
+```
+
+Expose Vercel system environment variables to builds. The application derives
+Preview and Production profiles from `VERCEL_ENV` and uses
+`VERCEL_PROJECT_PRODUCTION_URL` for canonical URLs in both environments.
+
+Configure `YANDEX_METRICA_ID` only for the Production environment. Production
+builds fail when it is missing or malformed; Preview builds fail if analytics is
+enabled accidentally. Local development requires no environment file.

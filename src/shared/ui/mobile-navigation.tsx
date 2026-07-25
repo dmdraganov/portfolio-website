@@ -1,8 +1,10 @@
 'use client';
 
+import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
+import { Button } from '@/shared/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -20,15 +22,27 @@ type MobileNavigationProps = Readonly<{
   }>;
 }>;
 
+const DESKTOP_NAVIGATION_QUERY = '(min-width: 48rem)';
+
 export function MobileNavigation({ items, labels }: MobileNavigationProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    const desktopNavigation = window.matchMedia(DESKTOP_NAVIGATION_QUERY);
+    const closeOnDesktop = () => {
+      if (desktopNavigation.matches) {
+        setOpen(false);
+      }
+    };
+
+    desktopNavigation.addEventListener('change', closeOnDesktop);
+    closeOnDesktop();
     document.documentElement.dataset.navigationEnhancement = 'ready';
     triggerRef.current?.removeAttribute('hidden');
 
     return () => {
+      desktopNavigation.removeEventListener('change', closeOnDesktop);
       delete document.documentElement.dataset.navigationEnhancement;
     };
   }, []);
@@ -37,14 +51,18 @@ export function MobileNavigation({ items, labels }: MobileNavigationProps) {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         render={
-          <button
+          <Button
             ref={triggerRef}
-            className="mobile-navigation__trigger min-h-11 rounded-md border border-border bg-surface-raised px-3 font-inherit text-inherit"
+            aria-label={labels.menu}
+            className="mobile-navigation__trigger size-11"
             hidden
+            size="icon-lg"
             type="button"
+            variant="outline"
           >
-            {labels.menu}
-          </button>
+            <MenuIcon aria-hidden="true" />
+            <span className="sr-only">{labels.menu}</span>
+          </Button>
         }
       />
       <SheetContent

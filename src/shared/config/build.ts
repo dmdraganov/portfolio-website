@@ -1,4 +1,4 @@
-export const BUILD_PROFILES = ['local', 'test', 'release'] as const;
+export const BUILD_PROFILES = ['local', 'test', 'preview', 'release'] as const;
 
 export type BuildProfile = (typeof BUILD_PROFILES)[number];
 
@@ -14,9 +14,29 @@ const LOCAL_ORIGIN = 'http://localhost:3000';
 const TEST_ORIGIN = 'http://127.0.0.1:3000';
 const METRICA_ID_PATTERN = /^[1-9][0-9]*$/;
 
-function parseProfile(value: string | undefined): BuildProfile {
+function parseProfile(
+  value: string | undefined,
+  vercelEnvironment: string | undefined
+): BuildProfile {
   if (value === undefined) {
-    return 'local';
+    if (
+      vercelEnvironment === undefined ||
+      vercelEnvironment === 'development'
+    ) {
+      return 'local';
+    }
+
+    if (vercelEnvironment === 'preview') {
+      return 'preview';
+    }
+
+    if (vercelEnvironment === 'production') {
+      return 'release';
+    }
+
+    throw new Error(
+      'VERCEL_ENV must be exactly one of: development, preview, production.'
+    );
   }
 
   if (BUILD_PROFILES.some((profile) => profile === value)) {
@@ -28,9 +48,51 @@ function parseProfile(value: string | undefined): BuildProfile {
   );
 }
 
+function requireVercelProductionOrigin(value: string | undefined): string {
+  if (value === undefined || value.length === 0) {
+    throw new Error(
+      'VERCEL_PROJECT_PRODUCTION_URL is required for Vercel preview and production builds.'
+    );
+  }
+
+  if (value !== value.trim() || value.includes('://')) {
+    throw new Error(
+      'VERCEL_PROJECT_PRODUCTION_URL must be one lowercase hostname without a protocol, port, path, query, fragment, or surrounding whitespace.'
+    );
+  }
+
+  let url: URL;
+
+  try {
+    url = new URL(`https://${value}`);
+  } catch {
+    throw new Error('VERCEL_PROJECT_PRODUCTION_URL must be a valid hostname.');
+  }
+
+  if (
+    url.hostname !== value ||
+    url.port !== '' ||
+    url.pathname !== '/' ||
+    url.search !== '' ||
+    url.hash !== ''
+  ) {
+    throw new Error(
+      'VERCEL_PROJECT_PRODUCTION_URL must be one lowercase hostname without a protocol, port, path, query, or fragment.'
+    );
+  }
+
+  return url.origin;
+}
+
+function requirePublishedOrigin(environment: BuildEnvironment): string {
+  return environment.SITE_URL === undefined
+    ? requireVercelProductionOrigin(environment.VERCEL_PROJECT_PRODUCTION_URL)
+    : requireReleaseOrigin(environment.SITE_URL);
+}
+
 function requireReleaseOrigin(value: string | undefined): string {
   if (value === undefined || value.length === 0) {
-    throw new Error('SITE_URL is required for BUILD_PROFILE=release.');
+    throw new Error('SITE_URL is required for a published build.');
   }
 
   if (value !== value.trim()) {
@@ -76,7 +138,10 @@ function requireMetricaId(value: string | undefined): string {
 }
 
 export function parseBuildConfig(environment: BuildEnvironment): BuildConfig {
-  const profile = parseProfile(environment.BUILD_PROFILE);
+  const profile = parseProfile(
+    environment.BUILD_PROFILE,
+    environment.VERCEL_ENV
+  );
 
   if (profile !== 'release') {
     if (environment.YANDEX_METRICA_ID !== undefined) {
@@ -87,14 +152,19 @@ export function parseBuildConfig(environment: BuildEnvironment): BuildConfig {
 
     return Object.freeze({
       profile,
-      siteOrigin: profile === 'local' ? LOCAL_ORIGIN : TEST_ORIGIN,
+      siteOrigin:
+        profile === 'local'
+          ? LOCAL_ORIGIN
+          : profile === 'test'
+            ? TEST_ORIGIN
+            : requirePublishedOrigin(environment),
       yandexMetricaId: null,
     });
   }
 
   return Object.freeze({
     profile,
-    siteOrigin: requireReleaseOrigin(environment.SITE_URL),
+    siteOrigin: requirePublishedOrigin(environment),
     yandexMetricaId: requireMetricaId(environment.YANDEX_METRICA_ID),
   });
 }

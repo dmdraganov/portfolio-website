@@ -2,7 +2,7 @@
 title: Freelance Portfolio Website PRD
 status: final
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-25
 sources:
   - ./brief.md
 ---
@@ -91,12 +91,13 @@ The Home Page must present services by client task, not by technology.
 
 #### FR-4: Working process
 
-The Home Page must explain the engagement in no more than six readable steps: task intake, clarification, estimate, 50% advance or Kwork order, staged delivery and agreed revisions, handoff and warranty.
+The Home Page must explain the engagement inside the services section in three readable steps: discuss the task, fix the terms, then develop and hand off the result. The 50% advance or Kwork order, agreed revisions, handoff, warranty, and scope-change boundaries remain visible in a compact note.
 
 **Consequences:**
 
 - Scope changes are explicitly estimated separately.
 - The Defect Warranty is distinguished from new requests.
+- The process remains a distinct subsection rather than a separate top-level Home Page section.
 
 #### FR-5: About and capability proof
 
@@ -116,7 +117,7 @@ Each featured project must have a stable dedicated route and consistent Case Stu
 
 **Consequences:**
 
-- Required sections are overview, task or product challenge, implemented solution, selected features, technical decisions, technology stack, visual gallery, external links, and contact CTA.
+- Required sections are overview, one compact project story covering the challenge, implemented solution, selected capabilities and technical decisions, technology stack, visual gallery, external links, and contact CTA.
 - The page title, description, canonical URL, and Open Graph image are route-specific.
 
 #### FR-7: Weather Application evidence
@@ -276,7 +277,7 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 - Indicative prices and engagement terms.
 - Meaningful motion with static and Reduced Motion fallbacks.
 - SEO, social previews, sitemap, robots metadata, and Yandex Metrica events.
-- Production deployment after domain selection.
+- Production and Preview deployments on Vercel, with canonical metadata fixed to the production domain.
 
 ### 7.2 Deferred
 
@@ -317,4 +318,5 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 - Core Web Vitals thresholds: [web.dev](https://web.dev/articles/defining-core-web-vitals-thresholds).
 - Accessibility target: [W3C WCAG 2.2](https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/).
 - Next.js metadata and Open Graph conventions: [Next.js documentation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images).
+- Vercel environment and deployment configuration: [Vercel documentation](https://vercel.com/docs/environment-variables/system-environment-variables).
 - Yandex Metrica installation: [Yandex Metrica documentation](https://yandex.com/support/metrica/en/quick-start).

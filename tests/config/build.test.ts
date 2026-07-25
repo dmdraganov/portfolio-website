@@ -14,6 +14,40 @@ test('defaults to the local profile when BUILD_PROFILE is absent', () => {
   });
 });
 
+test('derives preview and release profiles from the Vercel environment', () => {
+  assert.deepEqual(
+    parseBuildConfig({
+      VERCEL_ENV: 'preview',
+      VERCEL_PROJECT_PRODUCTION_URL: 'portfolio.example.com',
+    }),
+    {
+      profile: 'preview',
+      siteOrigin: 'https://portfolio.example.com',
+      yandexMetricaId: null,
+    }
+  );
+
+  assert.deepEqual(
+    parseBuildConfig({
+      VERCEL_ENV: 'production',
+      VERCEL_PROJECT_PRODUCTION_URL: 'portfolio.example.com',
+      YANDEX_METRICA_ID: '123456',
+    }),
+    {
+      profile: 'release',
+      siteOrigin: 'https://portfolio.example.com',
+      yandexMetricaId: '123456',
+    }
+  );
+});
+
+test('rejects unknown Vercel environments when no profile overrides them', () => {
+  assert.throws(
+    () => parseBuildConfig({ VERCEL_ENV: 'staging' }),
+    /VERCEL_ENV must be exactly one of/
+  );
+});
+
 test('uses fixed origins for local and test profiles', () => {
   assert.equal(
     parseBuildConfig({ BUILD_PROFILE: 'local' }).siteOrigin,
@@ -35,16 +69,33 @@ test('accepts only exact build profile names', () => {
 });
 
 test('rejects a Metrica ID outside the release profile', () => {
-  for (const BUILD_PROFILE of ['local', 'test'] as const) {
+  for (const BUILD_PROFILE of ['local', 'test', 'preview'] as const) {
     assert.throws(
       () =>
         parseBuildConfig({
           BUILD_PROFILE,
+          VERCEL_PROJECT_PRODUCTION_URL:
+            BUILD_PROFILE === 'preview' ? 'example.com' : undefined,
           YANDEX_METRICA_ID: '123456',
         }),
       /YANDEX_METRICA_ID must be absent/
     );
   }
+});
+
+test('accepts the Vercel production hostname as the published origin', () => {
+  assert.deepEqual(
+    parseBuildConfig({
+      BUILD_PROFILE: 'release',
+      VERCEL_PROJECT_PRODUCTION_URL: 'portfolio.example.com',
+      YANDEX_METRICA_ID: '123456',
+    }),
+    {
+      profile: 'release',
+      siteOrigin: 'https://portfolio.example.com',
+      yandexMetricaId: '123456',
+    }
+  );
 });
 
 test('accepts a normalized release configuration', () => {
@@ -109,6 +160,29 @@ test('rejects missing or malformed release Metrica IDs', () => {
           YANDEX_METRICA_ID,
         }),
       /YANDEX_METRICA_ID/
+    );
+  }
+});
+
+test('rejects malformed Vercel production hostnames', () => {
+  for (const VERCEL_PROJECT_PRODUCTION_URL of [
+    '',
+    'https://example.com',
+    'EXAMPLE.com',
+    'example.com/',
+    'example.com:443',
+    'example.com/path',
+    ' example.com',
+    'example.com ',
+  ]) {
+    assert.throws(
+      () =>
+        parseBuildConfig({
+          BUILD_PROFILE: 'preview',
+          VERCEL_PROJECT_PRODUCTION_URL,
+        }),
+      /VERCEL_PROJECT_PRODUCTION_URL/,
+      VERCEL_PROJECT_PRODUCTION_URL
     );
   }
 });

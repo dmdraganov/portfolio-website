@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "BUILD_PROFILE=local next dev",
-    "build": "npm run check:media && next build",
-    "build:local": "npm run check:media && BUILD_PROFILE=local next build",
-    "build:test": "npm run check:media && BUILD_PROFILE=test next build",
-    "build:release": "BUILD_PROFILE=release npm run check:media && BUILD_PROFILE=release next build",
+    "build": "npm run validate && next build",
+    "build:local": "BUILD_PROFILE=local npm run build",
+    "build:test": "BUILD_PROFILE=test npm run build",
+    "build:release": "BUILD_PROFILE=release npm run build",
     "start": "next start",
     "format": "prettier --write src tests scripts package.json next.config.ts tsconfig.json eslint.config.mjs postcss.config.mjs",
     "format:check": "prettier --check src tests scripts package.json next.config.ts tsconfig.json eslint.config.mjs postcss.config.mjs",

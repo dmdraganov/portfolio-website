@@ -7,7 +7,7 @@ paradigm: server-first modular monolith with progressive-enhancement islands
 scope: Russian-language freelance portfolio MVP
 status: final
 created: 2026-07-23
-updated: 2026-07-23
+updated: 2026-07-25
 binds:
   - FR-1..FR-17
   - NFR-1..NFR-5
@@ -60,7 +60,7 @@ flowchart LR
 
 - **Binds:** FR-2, FR-6..FR-9, FR-12, FR-16, FR-17
 - **Prevents:** approved copy, Home, case pages, metadata, sitemap, analytics, and next-project navigation disagreeing
-- **Rule:** `content/site.ts` and `content/projects.ts` are the editorial approval authority and the executable source consumed by routes and modules; `docs/CONTENT.md` maps these surfaces without duplicating their copy. Components contain structure, not approved visitor-facing strings. Metadata descriptions are separately approved fields, never body-copy truncations. Home order is header, hero, projects, services, process, about, capabilities, final CTA/footer. Case Study order is back/index, opening facts/actions, representative media, challenge, solution/features, technical decisions/stack, ordered gallery, next-project/contact. Visual layout never changes DOM order. Each Case Study requires role, task, solution, features, technical decisions, stack, 4–6 ordered proof assets, demo, repository, contact CTA, metadata, and next-project navigation. The single ordered `projects` array drives Home cards, `generateStaticParams`, sitemap, lookup, and next-project navigation; `dynamicParams` is false and unknown slugs call `notFound()`. Navigable HTML routes are exactly `/`, `/projects/weather-app`, and `/projects/sound-engineer`; metadata endpoints, static/framework assets, and the private health endpoint are separate route classes. One `app/_lib/metadata.ts` mapper combines approved SEO fields with a route-derived path, fixed `ru_RU` locale and index policy. Open Graph media remains optional in local/test builds while final assets are outstanding and is required by the release gate.
+- **Rule:** `content/site.ts` and `content/projects.ts` are the editorial approval authority and the executable source consumed by routes and modules; `docs/CONTENT.md` maps these surfaces without duplicating their copy. Components contain structure, not approved visitor-facing strings. Metadata descriptions are separately approved fields, never body-copy truncations. Home order is header, hero, projects, services with a nested three-step process, about, capabilities, final CTA/footer. Case Study order is back/index, opening facts/actions, representative media, one compact project story, ordered gallery, next-project/contact. Visual layout never changes DOM order. Each Case Study requires role, a story covering the challenge, solution, defining capabilities and technical decisions, stack, 4–6 ordered proof assets, demo, repository, contact CTA, metadata, and next-project navigation. The single ordered `projects` array drives Home cards, `generateStaticParams`, sitemap, lookup, and next-project navigation; `dynamicParams` is false and unknown slugs call `notFound()`. Navigable HTML routes are exactly `/`, `/projects/weather-app`, and `/projects/sound-engineer`; metadata endpoints and static/framework assets are separate route classes. One `app/_lib/metadata.ts` mapper combines approved SEO fields with a route-derived path, fixed `ru_RU` locale and index policy. Open Graph media remains optional in local/test/preview builds while final assets are outstanding and is required by the release gate.
 
 ### AD-4 — Content is build-owned, not runtime data
 
@@ -102,19 +102,19 @@ flowchart LR
 
 - **Binds:** FR-12, FR-16, FR-17, production deployment
 - **Prevents:** localhost metadata, inconsistent domains, duplicated proxy/app settings, and untracked public configuration
-- **Rule:** One strict parser in `shared/config/build.ts` runs before `next.config.ts` returns. `BUILD_PROFILE` accepts exactly `local`, `test`, or `release` with no trimming or case folding; absence means `local` only outside the production Docker build. `local` fixes the origin to `http://localhost:3000`, `test` to `http://127.0.0.1:3000`, and both reject a Metrica ID. `release` requires `SITE_URL` to equal one normalized HTTPS origin with lowercase host and no credentials, port, path, trailing slash, query, or fragment, and requires `YANDEX_METRICA_ID` to match `^[1-9][0-9]*$`; leading/trailing whitespace is invalid. The parser serializes only that origin and public counter ID into browser-visible build constants; other environment values remain server-only. One URL builder emits lowercase-host, no-trailing-slash canonical/sitemap URLs without query or fragment; analytics paths use pathname plus search and no hash. The release configuration is the single owner of the canonical origin: it supplies application metadata and templates Nginx `server_name`. Nginx issues 308 redirects from HTTP and any configured alternate host to that HTTPS origin while preserving path/query; Next.js `trailingSlash: false` normalizes incoming page paths to the slashless form. Configuration is validated and baked into the immutable image, not changed silently at runtime. The application owns metadata, CSP, and external-domain allowlists; Docker owns runtime and health; Nginx owns public HTTP(S), TLS/HSTS, request limits, and reverse proxy. A setting has one owner.
+- **Rule:** One strict parser in `shared/config/build.ts` runs before `next.config.ts` returns. An explicit `BUILD_PROFILE` accepts exactly `local`, `test`, `preview`, or `release` with no trimming or case folding. Without an override, Vercel's `VERCEL_ENV` maps `development` to `local`, `preview` to `preview`, and `production` to `release`; absence outside Vercel means `local`. `local` fixes the origin to `http://localhost:3000`, `test` to `http://127.0.0.1:3000`, and both reject a Metrica ID. Preview and release metadata use the stable production hostname from `VERCEL_PROJECT_PRODUCTION_URL`; a normalized `SITE_URL` remains an explicit local release-rehearsal override. Preview rejects a Metrica ID, while release requires `YANDEX_METRICA_ID` to match `^[1-9][0-9]*$`. The parser serializes only the validated production origin and public counter ID into browser-visible build constants. One URL builder emits lowercase-host, no-trailing-slash canonical/sitemap URLs without query or fragment; preview deployments therefore never publish preview-domain canonicals. Next.js owns metadata, CSP, security headers, external-domain allowlists, and slashless path normalization. Vercel owns deployment environment, public HTTPS, CDN delivery, platform routing, and rollback. A setting has one owner.
 
-### AD-11 — Production runs one immutable standalone artifact
+### AD-11 — Vercel owns immutable deployments
 
 - **Binds:** production runtime and release operations
-- **Prevents:** host-dependent builds, exposed Node ports, per-instance cache divergence, and unreproducible rollback
-- **Rule:** A multi-stage Docker build produces Next.js `output: "standalone"` on Node.js 24 LTS, copies `public/` to `.next/standalone/public` and `.next/static` to `.next/standalone/.next/static`, and starts `node server.js`. Compose has `proxy` and `app` services on a private network; only Nginx publishes 80/443. The private `/healthz` response includes the source commit build ID. Manual release starts from a clean commit after the full gate, builds for the inventoried VPS platform, saves the exact image, records its tarball SHA-256, transfers and verifies it on the VPS, loads it, and deploys Compose pinned to the commit tag. Building from a VPS checkout is prohibited. Smoke evidence covers the three HTML routes, one framework asset, one media asset, and one optimized-image response; rollback redeploys the prior verified artifact.
+- **Prevents:** environment-specific rebuild scripts, preview domains leaking into canonical metadata, mutable host state, and unreproducible rollback
+- **Rule:** Vercel's Git integration builds the Next.js project with the repository-pinned dependencies and Node.js 24. Every non-production branch receives an isolated Preview deployment; the configured production branch creates Production deployments. The standard `npm run build` runs the repository validation gate before `next build`, so Vercel cannot create a deployment from code that fails formatting, lint, type, unit, content, or media checks. Public pages remain statically generated and Vercel serves their framework and media assets through its managed delivery layer. A deployment is immutable and tied to one Git commit; rollback promotes or redeploys a previously verified Vercel deployment rather than rebuilding mutable server state. The application exposes no custom health endpoint because platform availability and deployment status belong to Vercel.
 
 ### AD-12 — Release evidence precedes deployment
 
 - **Binds:** all routes and NFR-1..NFR-5
 - **Prevents:** responsive, browser, accessibility, content, and enhancement regressions depending on developer memory
-- **Rule:** Before building the production image, run formatting check, ESLint, content/media validation, Next.js build, and Playwright against the production build. Playwright runs in the official image matching the exact package version and a pinned digest; browser revisions and reports are release evidence. Chromium covers all routes at 375, 768, 1024, and 1440px; Firefox and WebKit cover critical navigation/contact paths. The gate proves navigable routes, localized 404 recovery, exact-once analytics calls and release debug events, no horizontal overflow, 200% text zoom, 400% reflow, keyboard/focus visibility, touch/coarse pointer, Reduced Motion, unavailable non-critical JavaScript, slow network, media roles, external destinations, and zero axe critical/serious violations. Version-controlled lab settings run every route three cold-cache times at 375×812, 4× CPU, 150ms RTT, 1.6Mbps down/750Kbps up; median LCP ≤2.5s, CLS ≤0.1, and scripted primary-interaction latency ≤200ms block release. Manual current Edge/Safari/mobile Chrome/mobile Safari, screen-reader, motion, messaging-thumbnail, and real-device checks complete the gate.
+- **Rule:** The Vercel Build Command is the repository-standard `npm run build`; it runs formatting check, ESLint, TypeScript, unit tests, content/media validation, and the Next.js production build. Preview deployment acceptance then runs Playwright against the exact immutable Preview URL before promotion to Production. Chromium covers all routes at 375, 768, 1024, and 1440px; Firefox and WebKit cover critical navigation/contact paths. The gate proves navigable routes, localized 404 recovery, exact-once analytics calls and release debug events, no horizontal overflow, 200% text zoom, 400% reflow, keyboard/focus visibility, touch/coarse pointer, Reduced Motion, unavailable non-critical JavaScript, slow network, media roles, external destinations, and zero axe critical/serious violations. Version-controlled lab settings run every route three cold-cache times at 375×812, 4× CPU, 150ms RTT, 1.6Mbps down/750Kbps up; median LCP ≤2.5s, CLS ≤0.1, and scripted primary-interaction latency ≤200ms block production promotion. Manual current Edge/Safari/mobile Chrome/mobile Safari, screen-reader, motion, messaging-thumbnail, and real-device checks complete the gate.
 
 ## Consistency Conventions
 
@@ -126,28 +126,28 @@ flowchart LR
 | Media         | Files live under `public/media` and are statically imported beside contextual alt/caption copy; Next.js derives dimensions and `check-media.ts` enforces file budgets and integrity.                                                                                                                                                                 |
 | State         | Server data is immutable; client state is local and ephemeral; the URL owns navigation state; analytics is fire-and-forget.                                                                                                                                                                                                                          |
 | Failure       | Invalid content/config fails the build. Optional analytics and interaction enhancement fail open to semantic HTML. Dead external links and development media placeholders block release rather than producing production error UI.                                                                                                                   |
-| Configuration | `BUILD_PROFILE=release` validates and bakes public production configuration at image build; local/test analytics is disabled; no public value is duplicated in Nginx and application config.                                                                                                                                                         |
-| Observability | Nginx access/error logs and container stdout/stderr are the MVP operational record. The internal health check verifies `/healthz` status and build ID; the release smoke check verifies the rendered Home route and representative framework/media assets.                                                                                           |
+| Configuration | Vercel system variables select Preview/Production automatically; both use the production canonical origin, while analytics is enabled only for Production.                                                                                                                                                                                           |
+| Observability | Vercel deployment/build logs and Yandex Metrica are the MVP operational record. Preview acceptance verifies rendered routes and representative framework/media assets before production promotion.                                                                                                                                                   |
 
 ## Stack
 
 Reviewed implementation baseline:
 
-| Name                   | Version       | State                           |
-| ---------------------- | ------------- | ------------------------------- |
-| Node.js                | 24.18.0 LTS   | planned Docker runtime          |
-| Next.js                | 16.2.11       | locked                          |
-| PostCSS                | 8.5.22        | security override, exact-locked |
-| sharp                  | 0.35.3        | security override, exact-locked |
-| React                  | 19.2.4        | locked                          |
-| React DOM              | 19.2.4        | locked                          |
-| TypeScript             | 5.9.3         | locked                          |
-| Tailwind CSS           | 4.3.3         | locked                          |
-| ESLint                 | 9.39.5        | locked                          |
-| Prettier               | 3.9.6         | locked                          |
-| `@playwright/test`     | 1.61.1        | required, then exact-lock       |
-| `@axe-core/playwright` | 4.12.1        | required, then exact-lock       |
-| Nginx                  | 1.30.4 stable | planned proxy image             |
+| Name                   | Version | State                            |
+| ---------------------- | ------- | -------------------------------- |
+| Node.js                | 24.x    | Vercel runtime family            |
+| Next.js                | 16.2.11 | locked                           |
+| PostCSS                | 8.5.22  | security override, exact-locked  |
+| sharp                  | 0.35.3  | security override, exact-locked  |
+| React                  | 19.2.4  | locked                           |
+| React DOM              | 19.2.4  | locked                           |
+| TypeScript             | 5.9.3   | locked                           |
+| Tailwind CSS           | 4.3.3   | locked                           |
+| ESLint                 | 9.39.5  | locked                           |
+| Prettier               | 3.9.6   | locked                           |
+| `@playwright/test`     | 1.61.1  | required, then exact-lock        |
+| `@axe-core/playwright` | 4.12.1  | required, then exact-lock        |
+| Vercel                 | managed | deployment and delivery platform |
 
 Every planned row is installed and exact-locked before its gate runs. All rows receive a patch/security review before first release; upgrades pass the full gate rather than following `latest` automatically.
 
@@ -157,7 +157,6 @@ Every planned row is installed and exact-locked before its gate runs. All rows r
 src/
   app/                         # routes, metadata, sitemap, robots, composition
     _lib/metadata.ts           # sole Next page metadata/OG mapper
-    healthz/route.ts           # private status and source commit build ID
     projects/[slug]/           # registry-backed static Case Study route
   modules/
     home/                      # Home sections and owned islands
@@ -178,16 +177,13 @@ scripts/
 tests/
   e2e/                         # cross-route acceptance checks
   performance/                 # versioned lab profile and raw evidence
-deploy/
-  nginx/                       # proxy and transport policy
-Dockerfile
-compose.yaml
 ```
 
 ```mermaid
 flowchart LR
-  browser["Browser"] -->|HTTPS| nginx["Nginx 1.30.4"]
-  nginx -->|private HTTP| next["Next.js standalone container"]
+  git["Git repository"] -->|Preview or Production build| vercel["Vercel deployment"]
+  browser["Browser"] -->|HTTPS| vercel
+  vercel --> next["Next.js application"]
   next --> static["prerendered routes + public media"]
   browser -. "optional, non-blocking" .-> metrica["Yandex Metrica"]
   browser --> external["Telegram, email, GitHub, Kwork, demos"]
@@ -203,19 +199,17 @@ flowchart LR
 | Motion and system-object identity               | owning module islands and static media                             | AD-1, AD-6, AD-9         |
 | SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config                           | AD-3, AD-4, AD-10, AD-12 |
 | Responsive, accessible, resilient experience    | modules, shared UI, e2e gate                                       | AD-1, AD-6, AD-7, AD-12  |
-| VPS production delivery                         | Dockerfile, Compose, Nginx config                                  | AD-10, AD-11, AD-12      |
+| Vercel Preview and Production delivery          | Vercel project settings, `package.json`, build config              | AD-10, AD-11, AD-12      |
 
 ## Deferred
 
-- **Canonical domain, final media, and Yandex Metrica ID:** required `BUILD_PROFILE=release` inputs before production release; they do not change module boundaries.
+- **Custom canonical domain, final media, and Yandex Metrica ID:** configure the domain and production-only counter in Vercel before launch; they do not change module boundaries.
 - **Interactive 3D:** reconsider only after the static release meets Core Web Vitals and accessibility criteria and a device-tested prototype proves narrative value; any renderer remains a lazy replaceable island behind the static fallback.
 - **Motion dependency:** add and pin only when an approved interaction proves CSS/WAAPI insufficient.
 - **CMS, JSON source, or database:** reconsider when non-developers must publish independently or content frequency outgrows code review; validate any external data at the content boundary.
-- **CI/CD:** reconsider when a remote repository/registry is selected or deployments become regular; preserve the same quality gate, commit-tagged image, manual production approval, and rollback contract.
-- **CDN, multiple app instances, and shared cache:** reconsider only when measured traffic or availability needs exceed one VPS instance.
-- **External error tracking:** reconsider after production incidents show Nginx/container logs and browser acceptance tests are insufficient; do not add a client tracker speculatively.
-- **Exact Docker Engine/Compose versions and image digests:** record from the target VPS and pin before the first deployment.
-- **Final CSP source allowlist:** close after the canonical domain, Yandex Metrica integration, and all external media/script origins are known; production ships no report-only placeholder policy.
+- **Additional CI orchestration:** reconsider when Preview acceptance must run without manual promotion; preserve the same repository build gate and immutable-deployment rollback contract.
+- **External error tracking:** reconsider after production incidents show Vercel deployment/function logs and browser acceptance tests are insufficient; do not add a client tracker speculatively.
+- **CSP source expansion:** update the application-owned allowlist only when an approved external dependency requires a new origin.
 - **Source-document alignment:** update the UX/design documents' interactive four-state 3D language at their next revision; AD-6 is authoritative for implementation until then.
 - **Field Core Web Vitals source:** after 30 days and once a statistically useful sample exists, select a field source, review p75 LCP/INP/CLS against 2.5s/200ms/0.1, and create corrective work for misses; the versioned lab gate remains release-blocking meanwhile.
 - **Media viewer:** not required for the first release; galleries remain readable and zoomable without it. If later adopted, the AD-9 Dialog behavior becomes mandatory.

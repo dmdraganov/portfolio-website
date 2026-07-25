@@ -21,7 +21,7 @@ The site is content-first. Server-rendered semantic content and direct links for
 
 | Surface                | Route                      | Purpose                                                            |
 | ---------------------- | -------------------------- | ------------------------------------------------------------------ |
-| Home                   | `/`                        | Positioning, work, services, process, about, capabilities, contact |
+| Home                   | `/`                        | Positioning, work, services with process, about, capabilities, contact |
 | Weather Application    | `/projects/weather-app`    | Evidence, technical decisions, demo, GitHub, contact               |
 | Sound Engineer Website | `/projects/sound-engineer` | Evidence, interactions, demo, GitHub, contact                      |
 | Not found              | framework route            | Recover through Home and Projects links                            |
@@ -31,22 +31,19 @@ The site is content-first. Server-rendered semantic content and direct links for
 1. **Header** — name/mark, Projects, Services, About, Contact.
 2. **Hero** — promise, supporting statement, Primary CTA, project CTA, system-object opening state.
 3. **Selected projects** — two large entries with visible product imagery and concise proof.
-4. **Services and prices** — task-oriented list with starting prices and individual-estimate note.
-5. **How work happens** — six-step process, 50% advance or Kwork, scope and warranty boundaries.
-6. **About** — portrait, personal motivation, values, and working principles.
-7. **Capabilities** — client outcomes supported by a compact technical index.
-8. **Final CTA and footer** — Telegram first; email, GitHub, Kwork secondary.
+4. **Services, prices, and process** — task-oriented list with starting prices, followed by three steps and a compact note covering the 50% advance or Kwork, scope, and warranty boundaries.
+5. **About** — portrait, one concise personal paragraph, and three working principles.
+6. **Capabilities** — client outcomes supported by a compact technical index.
+7. **Final CTA and footer** — Telegram first; email, GitHub, Kwork secondary.
 
 ### Case Study sequence
 
 1. Back link and project index.
 2. Project title, one-sentence value, role, year, demo, and GitHub.
 3. Large representative media.
-4. Product challenge.
-5. Implemented solution and defining features.
-6. Technical decisions and stack.
-7. 4-6 asset gallery with captions.
-8. Next project and contact CTA.
+4. One compact project story connecting the challenge, implemented solution, defining capabilities, and technical decisions.
+5. 4-6 asset gallery with captions.
+6. Next project and contact CTA.
 
 ## Voice and Tone
 
@@ -166,7 +163,7 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 
 1. Anna opens a shared link on her phone.
 2. Hero copy confirms that both creation and repair are offered.
-3. She selects `Услуги и цены` from the header or scrolls to the pricing section.
+3. She selects `Услуги` from the header or scrolls to the pricing section.
 4. `Исправления и небольшие доработки — от 2 000 ₽` gives a budget floor.
 5. The process explains what information to send and how scope is fixed.
 6. She taps `Обсудить задачу`.

@@ -11,7 +11,7 @@ Convert a visitor from uncertainty into a direct Telegram or Kwork conversation 
 - Hero: 12-column desktop composition; copy uses 7 columns and the system object uses 5. On mobile, copy precedes a static or simplified object.
 - Projects: two full editorial entries, never masonry and never filterable at MVP scale.
 - Primary CTA is visible in the hero and final section. It is not sticky and not hover-only.
-- Maintain the approved section order from `../../EXPERIENCE.md`; do not collapse pricing or process into generic card grids.
+- Maintain the approved section order from `../../EXPERIENCE.md`. Pricing and the three-step process share one section but remain visually distinct, scannable row groups rather than generic card grids.
 
 ## System-Object States
 

@@ -35,9 +35,6 @@ function ProjectEntry({
         {projectNumber}
       </div>
       <div>
-        <p className={sectionLabelClass}>
-          {home.projects.itemLabel} {projectNumber}
-        </p>
         <h3 className="text-[clamp(1.8rem,3.2vw,3.6rem)] tracking-[-0.05em] leading-[0.94] transition-colors duration-[var(--duration-hover)] ease-[var(--ease-out)] group-focus-within/project:text-signal [@media(hover:hover)_and_(pointer:fine)]:group-hover/project:text-signal">
           {project.name}
         </h3>
@@ -112,9 +109,6 @@ export function HomePage() {
                 <span aria-hidden="true"> ↓</span>
               </Link>
             </div>
-            <p className="mt-6 max-w-[48rem] text-[0.9375rem] text-ink-muted">
-              {home.hero.note}
-            </p>
           </div>
           <div className="grid min-h-[22rem] place-items-center border-l border-border pl-[clamp(1rem,5vw,5rem)] max-md:min-h-60 max-md:border-t max-md:border-l-0 max-md:px-0 max-md:pt-8">
             <SystemObject />
@@ -124,18 +118,15 @@ export function HomePage() {
 
       <section
         id="projects"
-        className="py-[var(--space-section)]"
+        className="pt-[clamp(4rem,8vw,8rem)] pb-[var(--space-section)]"
         aria-labelledby="projects-title"
       >
-        <div className={`${pageContainerClass} pt-[clamp(4rem,8vw,8rem)]`}>
+        <div className={pageContainerClass}>
           <div className="max-w-[46rem]">
             <p className={sectionLabelClass}>{home.projects.label}</p>
             <h2 id="projects-title" className={sectionHeadingClass}>
               {home.projects.heading}
             </h2>
-            <p className="mt-6 max-w-[42rem] text-[clamp(1.0625rem,1.4vw,1.35rem)] text-ink-muted">
-              {home.projects.introduction}
-            </p>
           </div>
           <div className="mt-[clamp(3rem,7vw,7rem)]">
             {projects.map((project, index) => (
@@ -187,37 +178,31 @@ export function HomePage() {
           <p className="mt-6 max-w-[48rem] text-[0.9375rem] text-ink-muted">
             {home.services.note}
           </p>
-        </div>
-      </section>
-
-      <section
-        id="process"
-        className="py-[var(--space-section)]"
-        aria-labelledby="process-title"
-      >
-        <div className={pageContainerClass}>
-          <div className="max-w-[46rem]">
+          <div id="process" className="mt-[clamp(4rem,8vw,8rem)] scroll-mt-24">
             <p className={sectionLabelClass}>{home.process.label}</p>
-            <h2 id="process-title" className={sectionHeadingClass}>
+            <h3 id="process-title" className={sectionHeadingClass}>
               {home.process.heading}
-            </h2>
+            </h3>
+            <ol className="mt-[clamp(3rem,6vw,6rem)] grid grid-cols-3 p-0 max-md:grid-cols-1">
+              {home.process.steps.map((step, index) => (
+                <li
+                  className="min-w-0 border-y border-border p-6 [&:not(:first-child)]:border-l max-md:border-l-0! max-md:border-t-0 max-md:first:border-t"
+                  key={step.title}
+                >
+                  <span className="font-mono text-signal">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <p className="mt-6">
+                    <strong className="mb-2 block">{step.title}</strong>
+                    {step.text}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 max-w-[52rem] text-[0.9375rem] text-ink-muted">
+              {home.process.note}
+            </p>
           </div>
-          <ol className="mt-[clamp(3rem,6vw,6rem)] grid grid-cols-3 p-0 max-lg:grid-cols-2 max-md:grid-cols-1">
-            {home.process.steps.map((step, index) => (
-              <li
-                className="min-w-0 border-t border-b border-border p-6 [&:nth-child(3n+2)]:border-l [&:nth-child(3n+3)]:border-l max-lg:[&:nth-child(odd)]:border-l-0 max-md:border-l-0! max-md:border-t-0 max-md:first:border-t"
-                key={step.title}
-              >
-                <span className="font-mono text-signal">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <p className="mt-6">
-                  <strong className="mb-2 block">{step.title}</strong>
-                  {step.text}
-                </p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
@@ -242,11 +227,7 @@ export function HomePage() {
             <h2 id="about-title" className={sectionHeadingClass}>
               {home.about.heading}
             </h2>
-            {home.about.paragraphs.map((paragraph) => (
-              <p className="max-w-[47rem]" key={paragraph}>
-                {paragraph}
-              </p>
-            ))}
+            <p className="max-w-[47rem]">{home.about.text}</p>
             <h3 className="mt-8 text-base">{home.about.principlesHeading}</h3>
             <ul className="grid gap-2 pl-[1.2rem]">
               {home.about.principles.map((principle) => (

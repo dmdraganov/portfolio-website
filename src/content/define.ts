@@ -27,10 +27,7 @@ export type ProjectDefinition = Readonly<{
   heading: string;
   lead: string;
   role: string;
-  task: string;
-  solution: string;
-  features: readonly string[];
-  technicalDecisions: string;
+  story: string;
   stack: readonly string[];
   links: Readonly<{
     demo: Readonly<{ label: string; href: string }>;
