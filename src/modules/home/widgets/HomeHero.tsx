@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { siteContent } from '@/content/site';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
-import { SystemObject } from '@/shared/ui/SystemObject';
 
+import { SystemObject } from '../ui/SystemObject';
 import {
   pageContainerClass,
   sectionLabelClass,

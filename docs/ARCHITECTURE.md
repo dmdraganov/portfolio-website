@@ -159,17 +159,19 @@ src/
     _lib/metadata.ts           # sole Next page metadata/OG mapper
     projects/[slug]/           # registry-backed static Case Study route
   modules/
-    home/                      # Home sections and owned islands
-    case-study/                # shared Case Study renderer and owned islands
+    home/                      # Home page: widgets plus module-only UI/islands
+    case-study/                # Case Study page: widgets plus module-only UI/islands
   content/
     define.ts                  # small project/content contracts and assertions
     site.ts                    # approved site, Home, UI and system copy
     projects.ts                # approved ordered project records and lookups
   shared/
+    analytics/                 # root-level analytics React leaves
     config/build.ts            # sole strict build-profile/environment parser
     lib/analytics/             # vendor adapter and event contract
     lib/url/                   # canonical and analytics URL normalization
-    ui/                        # proven shared primitives
+    ui/                        # reusable visual/behavioral primitives
+    widgets/                   # reusable composed interface blocks
 public/
   media/                       # portrait, project, and social assets
 scripts/
@@ -195,7 +197,7 @@ flowchart LR
 | ----------------------------------------------- | ------------------------------------------------------------------ | ------------------------ |
 | Home narrative, services, process, about        | `modules/home`, `content`                                          | AD-1, AD-2, AD-3, AD-6   |
 | Project discovery and two Case Studies          | `content/projects.ts`, `modules/case-study`, `app/projects/[slug]` | AD-2, AD-3, AD-4, AD-7   |
-| Contact and external destinations               | `shared/ui/TrackedLink`, `shared/lib/analytics`, `content`         | AD-1, AD-8               |
+| Contact and external destinations               | `shared/ui/TrackedLink`, `shared/analytics`, `shared/lib/analytics`, `content` | AD-1, AD-8               |
 | Motion and system-object identity               | owning module islands and static media                             | AD-1, AD-6, AD-9         |
 | SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config                           | AD-3, AD-4, AD-10, AD-12 |
 | Responsive, accessible, resilient experience    | modules, shared UI, e2e gate                                       | AD-1, AD-6, AD-7, AD-12  |

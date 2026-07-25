@@ -2,9 +2,9 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { Suspense } from 'react';
 
 import { siteContent } from '../content/site';
-import { SiteHeader } from '../shared/ui/SiteHeader';
-import { RouteViewTracker } from '../shared/ui/RouteViewTracker';
-import { YandexMetrica } from '../shared/ui/YandexMetrica';
+import { RouteViewTracker } from '../shared/analytics/RouteViewTracker';
+import { YandexMetrica } from '../shared/analytics/YandexMetrica';
+import { SiteHeader } from '../shared/widgets/SiteHeader';
 import './globals.css';
 
 const geistSans = Geist({

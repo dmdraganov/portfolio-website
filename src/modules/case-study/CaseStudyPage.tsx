@@ -1,8 +1,8 @@
 import type { Project } from '@/content/projects';
-import { CaseContactSection } from './components/CaseContactSection';
-import { CaseGallery } from './components/CaseGallery';
-import { CaseHero } from './components/CaseHero';
-import { CaseOverview } from './components/CaseOverview';
+import { CaseContactSection } from './widgets/CaseContactSection';
+import { CaseGallery } from './widgets/CaseGallery';
+import { CaseHero } from './widgets/CaseHero';
+import { CaseOverview } from './widgets/CaseOverview';
 
 export function CaseStudyPage({ project }: Readonly<{ project: Project }>) {
   return (

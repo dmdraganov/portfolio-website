@@ -1,9 +1,9 @@
-import { AboutSection } from './components/AboutSection';
-import { CapabilitiesSection } from './components/CapabilitiesSection';
-import { ContactSection } from './components/ContactSection';
-import { HomeHero } from './components/HomeHero';
-import { ProjectsSection } from './components/ProjectsSection';
-import { ServicesSection } from './components/ServicesSection';
+import { AboutSection } from './widgets/AboutSection';
+import { CapabilitiesSection } from './widgets/CapabilitiesSection';
+import { ContactSection } from './widgets/ContactSection';
+import { HomeHero } from './widgets/HomeHero';
+import { ProjectsSection } from './widgets/ProjectsSection';
+import { ServicesSection } from './widgets/ServicesSection';
 
 export function HomePage() {
   return (
