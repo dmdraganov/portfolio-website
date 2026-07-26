@@ -197,7 +197,7 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 
 ## Open Implementation Inputs
 
-- Canonical domain.
+ Canonical domain: `draganov.vercel.app`.
 - Final portrait files and treatment.
 - Final project media.
 - Yandex Metrica tag ID.

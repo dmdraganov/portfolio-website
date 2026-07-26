@@ -42,6 +42,7 @@ npm run build
 Expose Vercel system environment variables to builds. The application derives
 Preview and Production profiles from `VERCEL_ENV` and uses
 `VERCEL_PROJECT_PRODUCTION_URL` for canonical URLs in both environments.
+The canonical Production hostname is `draganov.vercel.app`.
 
 Configure `YANDEX_METRICA_ID` only for the Production environment. Production
 builds fail when it is missing or malformed; Preview builds fail if analytics is

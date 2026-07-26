@@ -205,7 +205,7 @@ flowchart LR
 
 ## Deferred
 
-- **Custom canonical domain, final media, and Yandex Metrica ID:** configure the domain and production-only counter in Vercel before launch; they do not change module boundaries.
+- **Final media and Yandex Metrica ID:** route-specific Open Graph assets and the production-only counter remain release inputs. The canonical Production hostname is `draganov.vercel.app`; Vercel must expose it as `VERCEL_PROJECT_PRODUCTION_URL` for Preview and Production builds.
 - **Interactive 3D:** reconsider only after the static release meets Core Web Vitals and accessibility criteria and a device-tested prototype proves narrative value; any renderer remains a lazy replaceable island behind the static fallback.
 - **Motion dependency:** add and pin only when an approved interaction proves CSS/WAAPI insufficient.
 - **CMS, JSON source, or database:** reconsider when non-developers must publish independently or content frequency outgrows code review; validate any external data at the content boundary.

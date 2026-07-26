@@ -221,7 +221,7 @@ Every public route must expose unique Russian title and description metadata.
 
 **Consequences:**
 
-- The site includes canonical URLs after the domain is selected.
+ The site includes canonical URLs on `https://draganov.vercel.app`.
 - `robots.txt` and `sitemap.xml` include all public routes.
 - Semantic heading order has one primary page heading.
 
@@ -308,7 +308,7 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 
 ## 9. Open Questions
 
-1. What domain will become canonical?
+1. The canonical domain is `draganov.vercel.app`.
 2. Which final portrait treatment will be selected after visual exploration?
 3. Which 4-6 assets best explain each project?
 4. What Yandex Metrica tag ID will be used in production?
