@@ -306,12 +306,12 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 
 - Do not optimize raw CTA clicks by hiding prices, exaggerating expertise, or reducing project evidence; lead quality and trust matter more than click volume.
 
-## 9. Open Questions
+## 9. Release Parameters
 
 1. The canonical domain is `draganov.vercel.app`.
-2. Which final portrait treatment will be selected after visual exploration?
-3. Which 4-6 assets best explain each project?
-4. What Yandex Metrica tag ID will be used in production?
+2. The existing portrait is final and does not require further work.
+3. Route-specific Open Graph images are included for the Home page and both MVP Case Studies.
+4. The production Yandex Metrica tag ID is `111050926`.
 
 ## 10. Source Standards
 

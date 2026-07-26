@@ -195,9 +195,9 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 - Each asset has a short caption explaining why it matters; captions do not merely name the screen.
 - Source content and final copy live in `src/content/site.ts` and `src/content/projects.ts`; `CONTENT.md` maps those editorial surfaces.
 
-## Open Implementation Inputs
+## Release Parameters
 
- Canonical domain: `draganov.vercel.app`.
-- Final portrait files and treatment.
-- Final project media.
-- Yandex Metrica tag ID.
+- Canonical domain: `draganov.vercel.app`.
+- Portrait: the existing site portrait is final and needs no further treatment.
+- Route-specific Open Graph images: `og-home.webp`, `og-weather-app.webp`, and `og-sound-engineer.webp`.
+- Yandex Metrica production counter: `111050926`.

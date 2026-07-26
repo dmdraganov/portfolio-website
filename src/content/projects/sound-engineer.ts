@@ -4,6 +4,7 @@ import soundModal from '../../../public/media/soundengineer-modal.webp';
 import soundProjects from '../../../public/media/soundengineer-projects.webp';
 import soundServices from '../../../public/media/soundengineer-services.webp';
 import soundOverviewSource from '../../../public/media/soundengineer.webp';
+import ogSoundEngineer from '../../../public/media/og-sound-engineer.webp';
 
 import { defineProject } from '../define';
 
@@ -21,6 +22,10 @@ export const soundEngineer = defineProject({
     title: 'Sound Engineer Website — кейс Дмитрия Драганова',
     description:
       'Адаптивный шестистраничный сайт с кастомным аудиоплеером, модальными окнами и вкладками.',
+    image: {
+      source: ogSoundEngineer,
+      alt: 'Интерфейс аудиоплеера со звуковой волной и микшерным пультом',
+    },
   },
   card: {
     summary:

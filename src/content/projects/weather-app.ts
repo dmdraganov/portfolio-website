@@ -4,6 +4,7 @@ import weatherMobile from '../../../public/media/weather-app-mobile.webp';
 import weatherModal from '../../../public/media/weather-app-modal.webp';
 import weatherSettings from '../../../public/media/weather-app-settings.webp';
 import weatherOverviewSource from '../../../public/media/weather-app.webp';
+import ogWeatherApp from '../../../public/media/og-weather-app.webp';
 
 import { defineProject } from '../define';
 
@@ -22,6 +23,10 @@ export const weatherApp = defineProject({
     description:
       'Погодное приложение на React и TypeScript с картой, поиском локаций, кэшированием данных, локализацией и Canvas-графиком.',
   },
+    image: {
+      source: ogWeatherApp,
+      alt: 'Интерфейс погодного приложения с прогнозом, картой и графиком',
+    },
   card: {
     summary:
       'Приложение с прогнозом погоды, поиском локаций, картой и интерактивной визуализацией данных.',
