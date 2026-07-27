@@ -1,10 +1,10 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Suspense } from 'react';
 
-import { sharedSiteContent } from '../content/site-shared';
-import { RouteViewTracker } from '../shared/analytics/RouteViewTracker';
-import { YandexMetrica } from '../shared/analytics/YandexMetrica';
-import { SiteHeader } from '../shared/widgets/SiteHeader';
+import { sharedSiteContent } from '@/content/site/shared';
+import { RouteViewTracker } from '@/shared/analytics/RouteViewTracker';
+import { YandexMetrica } from '@/shared/analytics/YandexMetrica';
+import { SiteHeader } from '@/shared/widgets/SiteHeader';
 import './globals.css';
 
 const geistSans = Geist({
@@ -28,6 +28,7 @@ export default function RootLayout({
     <html
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} font-sans`}
+      data-scroll-behavior="smooth"
     >
       <body>
         <SiteHeader

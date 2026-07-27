@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import type { PageSeo } from '../../content/define';
-import { toCanonicalUrl } from '../../shared/lib/url';
+import type { PageSeo } from '@/content/define';
+import { toCanonicalUrl } from '@/shared/lib/url';
 
 type PageMetadataInput = Readonly<{
   path: '/' | `/projects/${string}`;

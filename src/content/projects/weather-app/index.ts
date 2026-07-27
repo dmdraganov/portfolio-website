@@ -1,11 +1,13 @@
-import weatherLight from '../../../public/media/weather-app-light.webp';
-import weatherLocation from '../../../public/media/weather-app-location.webp';
-import weatherMobile from '../../../public/media/weather-app-mobile.webp';
-import weatherModal from '../../../public/media/weather-app-modal.webp';
-import weatherSettings from '../../../public/media/weather-app-settings.webp';
-import weatherOverviewSource from '../../../public/media/weather-app.webp';
+import {
+  weatherLight,
+  weatherLocation,
+  weatherMobile,
+  weatherModal,
+  weatherOverviewSource,
+  weatherSettings,
+} from './media';
 
-import { defineProject } from '../define';
+import { defineProject } from '../../define';
 
 const weatherOverview = {
   source: weatherOverviewSource,
@@ -46,7 +48,7 @@ export const weatherApp = defineProject({
   links: {
     demo: {
       label: 'Открыть приложение',
-      href: 'https://weather-app-self-three-95.vercel.app/',
+      href: 'https://weather.draganov.vercel.app/',
     },
     repository: {
       label: 'Смотреть код на GitHub',

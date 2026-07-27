@@ -102,9 +102,9 @@ components:
 
 ## Brand & Style
 
-The identity is **systemic editorial minimalism**: an `ui-ux-pro-max` blend of Exaggerated Minimalism and a Motion-Driven Portfolio, disciplined by the requirement that motion always explains or confirms something. Strict typography and generous negative space establish control, while one purposeful 3D system and a small number of experimental details demonstrate technical fluency. The site should feel like a capable builder explaining a system, not a developer résumé decorated with effects.
+The identity is **systemic editorial minimalism**: an `ui-ux-pro-max` blend of Exaggerated Minimalism and a Motion-Driven Portfolio, disciplined by the requirement that motion always explains or confirms something. Strict typography and generous negative space establish control, while one purposeful site blueprint and a small number of experimental details demonstrate technical fluency. The site should feel like a capable builder explaining a system, not a developer résumé decorated with effects.
 
-The narrative metaphor is assembly and repair. A modular object may begin incomplete, align as the offer becomes clear, separate to reveal project evidence, and resolve into a stable structure near the CTA. Every visual transformation must map to an idea in the copy.
+The narrative metaphor is assembly and repair. A site blueprint exposes structure, interface, data, accessibility, and responsive behavior as connected parts of one working result. Every visual transformation must map to an idea in the copy.
 
 The real portrait is the identity anchor. AI may clean the background, extend the crop, or create a restrained art-directed environment; it must not materially change Dmitry's face or present a synthetic person.
 
@@ -135,11 +135,11 @@ Desktop uses a flexible 12-column grid. Mobile uses a single column with occasio
 - Home Page content max width: 1440px, with readable copy lines capped near 65 characters.
 - Case Study narrative max width: 760px; media may extend to the wider grid.
 - Projects may alternate alignment, but reading order remains linear in the DOM.
-- The hero should reserve space for the 3D system without requiring it for comprehension.
+- The hero should reserve space for the site blueprint without requiring it for comprehension.
 
 ## Elevation & Depth
 
-Depth comes from real spatial composition, tonal layers, and media scale—not stacks of card shadows. Use shadows only where an object is meant to feel physically separate. The 3D object should use restrained lighting and materials so it reads as a designed system rather than a game asset.
+Depth comes from real spatial composition, tonal layers, and media scale—not stacks of card shadows. Use shadows only where an object is meant to feel physically separate. The blueprint creates depth through small, purposeful separation between its grid, interface, and system layers.
 
 ## Shapes
 
@@ -156,7 +156,7 @@ shadcn/ui supplies accessible behavioral primitives where they reduce interactio
 - **Project frame** — Large media window with a fixed aspect ratio and reserved dimensions. It may reveal once through `clip-path` over `{components.motion-system.reveal-duration}`, with an opacity-only Reduced Motion fallback. Project title, summary, and action remain visible without hover.
 - **Price line** — Service name, short boundary statement, and `от` price. It is a list or ruled table, not a pricing-plan card grid.
 - **Capability index** — Compact grouped list translating client outcomes to supporting technologies.
-- **System object** — One reusable 3D scene with Fragmented, Aligned, Exploded View, and Resolved states tied to narrative sections. It has no continuous idle orbit. Rendering pauses offscreen and when the document is hidden; static and Reduced Motion variants preserve the composition.
+- **Site blueprint** — One code-native SVG composition showing grid, interface, responsive range, data, keyboard access, and CTA as parts of a working web system. A one-time entrance reveals grid, browser frame, interface, drawn connections, and aligned label capsules in order. Fine-pointer position may then spring-shift the browser frame, interface, and system layer at visibly different depths; hover entry itself adds no transform, and the coordinate grid with its labels remains fixed. Reduced Motion preserves the complete static composition.
 - **Portrait block** — Authentic portrait, short About text, and working principles. Avoid generic code-themed overlays.
 - **Cursor enhancement** — Fine-pointer-only contextual label such as `Открыть кейс`; never a replacement for link text or native focus. A spring may smooth the decorative label without delaying the actual hover state.
 - **Header and mobile menu** — Header colors transition over `{components.motion-system.hover-duration}`. The mobile sheet enters over `{components.motion-system.drawer-duration}` with `{components.motion-system.ease-drawer}` and exits in 200ms; focus is trapped and restored.
@@ -185,5 +185,5 @@ Motion rules apply across components:
 | Show project interfaces at legible scale                    | Hide work behind abstract mockups or extreme perspective            |
 | Name exact transition properties and use custom curves      | Use `transition: all`, weak default easing, or `ease-in` feedback   |
 | Keep frequent interactions immediate or under 200ms         | Add cinematic motion to navigation, keyboard actions, or every row  |
-| Use one explanatory 3D system and pause it when irrelevant  | Run multiple parallax layers or continuous decorative animation     |
+| Use one explanatory site blueprint with restrained depth    | Run multiple parallax layers or continuous decorative animation     |
 | Start scale entrances near their final size                 | Animate from `scale(0)`                                             |

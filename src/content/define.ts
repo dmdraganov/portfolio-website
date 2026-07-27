@@ -30,7 +30,7 @@ export type ProjectDefinition = Readonly<{
   story: string;
   stack: readonly string[];
   links: Readonly<{
-    demo: Readonly<{ label: string; href: string }>;
+    demo?: Readonly<{ label: string; href: string }>;
     repository: Readonly<{ label: string; href: string }>;
   }>;
   gallery: readonly [

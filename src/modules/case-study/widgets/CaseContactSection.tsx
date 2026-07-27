@@ -2,16 +2,13 @@ import Image from 'next/image';
 
 import type { Project } from '@/content/projects';
 import { getNextProject } from '@/content/projects';
-import { caseStudyContent } from '@/content/case-study';
-import { sharedSiteContent } from '@/content/site-shared';
+import { caseStudyContent } from '@/content/site/case-study';
+import { sharedSiteContent } from '@/content/site/shared';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
 import { TrackedLink } from '@/shared/ui/TrackedLink';
+import { pageContainerClass, sectionLabelClass } from '@/shared/ui/styles';
 
-import {
-  pageContainerClass,
-  sectionHeadingClass,
-  sectionLabelClass,
-} from '../styles';
+import { sectionHeadingClass } from '../styles';
 
 const { contact } = sharedSiteContent;
 

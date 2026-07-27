@@ -19,18 +19,19 @@ The site is content-first. Server-rendered semantic content and direct links for
 
 ## Information Architecture
 
-| Surface                | Route                      | Purpose                                                            |
-| ---------------------- | -------------------------- | ------------------------------------------------------------------ |
-| Home                   | `/`                        | Positioning, work, services with process, about, capabilities, contact |
-| Weather Application    | `/projects/weather-app`    | Evidence, technical decisions, demo, GitHub, contact               |
-| Sound Engineer Website | `/projects/sound-engineer` | Evidence, interactions, demo, GitHub, contact                      |
-| Not found              | framework route            | Recover through Home and Projects links                            |
+| Surface                | Route                           | Purpose                                                                |
+| ---------------------- | ------------------------------- | ---------------------------------------------------------------------- |
+| Home                   | `/`                             | Positioning, work, services with process, about, capabilities, contact |
+| Weather Application    | `/projects/weather-app`         | Evidence, technical decisions, demo, GitHub, contact                   |
+| Sound Engineer Website | `/projects/sound-engineer`      | Evidence, interactions, demo, GitHub, contact                          |
+| Pharmacy E-Commerce    | `/projects/pharmacy-e-commerce` | Evidence, catalog, admin panel, GitHub, contact                        |
+| Not found              | framework route                 | Recover through Home and Projects links                                |
 
 ### Home Page sequence
 
 1. **Header** — name/mark, Projects, Services, About, Contact.
-2. **Hero** — promise, supporting statement, Primary CTA, project CTA, system-object opening state.
-3. **Selected projects** — two large entries with visible product imagery and concise proof.
+2. **Hero** — promise, supporting statement, Primary CTA, project CTA, and a live site blueprint.
+3. **Selected projects** — large entries with visible product imagery and concise proof.
 4. **Services, prices, and process** — task-oriented list with starting prices, followed by three steps and a compact note covering the 50% advance or Kwork, scope, and warranty boundaries.
 5. **About** — portrait, one concise personal paragraph, and three working principles.
 6. **Capabilities** — client outcomes supported by a compact technical index.
@@ -72,33 +73,32 @@ Microcopy is direct, calm, specific, and written in first person when Dmitry spe
 
 ## State Patterns
 
-| State                              | Surface                       | Treatment                                                                                                                        |
-| ---------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Initial document                   | All routes                    | Content and navigation render before enhancement code.                                                                           |
-| 3D loading                         | Home                          | Reserved composition with static system artwork; core copy is ready and no generic spinner appears.                              |
-| WebGL unavailable                  | Home                          | Static keyframe or optimized image replaces the scene.                                                                           |
-| Reduced Motion                     | All routes                    | Short opacity and color transitions remain; position, scale, parallax, scrubbed transforms, and continuous rotation are removed. |
-| Document hidden or scene offscreen | Home                          | 3D rendering and decorative requestAnimationFrame loops pause.                                                                   |
-| Missing project media              | Case Study during development | Explicit placeholder naming the required asset; must not reach production.                                                       |
-| External destination unavailable   | All routes                    | Link is removed or corrected before release; no dead-link UI in production.                                                      |
-| 404                                | Not found                     | `Страница не найдена.` with Home and Projects routes.                                                                            |
+| State                             | Surface                       | Treatment                                                                                                                        |
+| --------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Initial document                  | All routes                    | Content and navigation render before enhancement code.                                                                           |
+| Blueprint enhancement unavailable | Home                          | The complete static blueprint remains visible; core copy and actions are unaffected.                                             |
+| Reduced Motion                    | All routes                    | Short opacity and color transitions remain; position, scale, parallax, scrubbed transforms, and continuous rotation are removed. |
+| Missing project media             | Case Study during development | Explicit placeholder naming the required asset; must not reach production.                                                       |
+| External destination unavailable  | All routes                    | Link is removed or corrected before release; no dead-link UI in production.                                                      |
+| 404                               | Not found                     | `Страница не найдена.` with Home and Projects routes.                                                                            |
 
 ## Motion Specification
 
 Every animation must serve explanation, spatial continuity, state indication, feedback, or the prevention of a jarring change. Frequency determines restraint.
 
-| Interaction                        | Frequency   | Behavior                                                                                     |
-| ---------------------------------- | ----------- | -------------------------------------------------------------------------------------------- |
-| Keyboard navigation and activation | Repeated    | Immediate; no entrance or route animation                                                    |
-| Button press                       | Repeated    | 140ms `scale(0.97)` with `{components.motion-system.ease-out}`                               |
-| Hover color, underline, arrow      | Repeated    | 180ms; gate behind fine pointer and hover capability                                         |
-| Header surface change              | Repeated    | 180ms color, border-color, and opacity only                                                  |
-| Mobile navigation sheet            | Occasional  | Enter 280ms with `{components.motion-system.ease-drawer}`; exit 200ms                        |
-| Media viewer                       | Occasional  | Overlay 180ms; centered content 220ms from `scale(0.97)` plus opacity                        |
-| Project image reveal               | Rare        | One-time 600ms clip-path reveal; opacity fallback                                            |
-| Section group reveal               | Rare        | Maximum four items, 40ms stagger, no blocked interaction                                     |
-| System-object state change         | Explanatory | Scroll progress maps between named states; no scroll capture or idle orbit                   |
-| Contextual cursor label            | Decorative  | Spring-smoothed label on fine pointer; native cursor and actual hover state remain immediate |
+| Interaction                        | Frequency   | Behavior                                                                                              |
+| ---------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------- |
+| Keyboard navigation and activation | Repeated    | Immediate; no entrance or route animation                                                             |
+| Button press                       | Repeated    | 140ms `scale(0.97)` with `{components.motion-system.ease-out}`                                        |
+| Hover color, underline, arrow      | Repeated    | 180ms; gate behind fine pointer and hover capability                                                  |
+| Header surface change              | Repeated    | 180ms color, border-color, and opacity only                                                           |
+| Mobile navigation sheet            | Occasional  | Enter 280ms with `{components.motion-system.ease-drawer}`; exit 200ms                                 |
+| Media viewer                       | Occasional  | Overlay 180ms; centered content 220ms from `scale(0.97)` plus opacity                                 |
+| Project image reveal               | Rare        | One-time 600ms clip-path reveal; opacity fallback                                                     |
+| Section group reveal               | Rare        | Maximum four items, 40ms stagger, no blocked interaction                                              |
+| Site blueprint assembly            | Rare        | One-time sequence reveals grid, frame, interface, then system connections                             |
+| Site blueprint layer shift         | Explanatory | Pointer position alone spring-shifts frame, interface, and system layers over a fixed coordinate grid |
+| Contextual cursor label            | Decorative  | Spring-smoothed label on fine pointer; native cursor and actual hover state remain immediate          |
 
 Implementation rules:
 
@@ -114,7 +114,7 @@ Implementation rules:
 - Native vertical scroll remains in control at all times.
 - Anchor navigation uses smooth scrolling only when Reduced Motion is not requested.
 - Section reveal is a supporting cue, not a gate; content starts readable and may transition once from no more than an 8px offset.
-- The system object changes through Fragmented, Aligned, Exploded View, and Resolved states as relevant sections enter the viewport. No frame-by-frame scroll lock and no continuous idle rotation.
+- The site blueprint markup is complete from the initial document. Without Reduced Motion, a one-time entrance reveals grid, frame, interface, drawn connections, and aligned annotation labels in that order. On fine pointers, Motion springs map pointer position to pronounced depth shifts across the frame, interface, and system layer while the coordinate grid and its labels remain fixed. Entering hover alone causes no displacement; neither behavior gates content.
 - Pointer hover may reveal contextual text; touch receives equivalent persistent labels.
 - `Escape` closes any media viewer. Focus returns to the invoking control.
 - All actions work with keyboard alone.
@@ -137,15 +137,15 @@ Implementation rules:
 
 ## Responsive & Platform
 
-| Range        | Behavior                                                                                                  |
-| ------------ | --------------------------------------------------------------------------------------------------------- |
-| `< 640px`    | Single-column content, persistent text labels, no custom cursor, simplified or static 3D, full-width CTA. |
-| `640-1023px` | Single-column narrative with wider media; 3D may be reduced in complexity.                                |
-| `≥ 1024px`   | 12-column compositions, controlled asymmetry, full system-object choreography, contextual cursor allowed. |
+| Range        | Behavior                                                                                              |
+| ------------ | ----------------------------------------------------------------------------------------------------- |
+| `< 640px`    | Single-column content, no custom cursor, complete blueprint scaled to viewport width, full-width CTA. |
+| `640-1023px` | Single-column narrative with a wider complete blueprint and no pointer parallax on touch input.       |
+| `≥ 1024px`   | 12-column compositions, controlled asymmetry, full blueprint annotations, contextual cursor allowed.  |
 
 Navigation collapses to a menu only if all key links cannot fit. The mobile menu must be a simple dialog/sheet with visible close control, focus trap, Escape handling, and scroll restoration.
 
-The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `docs/design-system/pages/project-case.md`; Case Studies omit the 3D scene and prioritize media performance.
+The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `docs/design-system/pages/project-case.md`; Case Studies omit the blueprint and prioritize project media.
 
 ## Motion QA
 
@@ -155,7 +155,8 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 - Test hover rules with mouse and touch; no touch action may become stuck in hover state.
 - Test the mobile menu and project media on physical mobile hardware.
 - Verify no animation delays navigation, CTA activation, or reading.
-- Verify the 3D scene pauses offscreen and when the browser tab is hidden.
+- Verify the blueprint assembly order at normal speed and in slow motion.
+- Verify the blueprint remains legible without hover and does not overflow at supported widths.
 
 ## Key Flows
 

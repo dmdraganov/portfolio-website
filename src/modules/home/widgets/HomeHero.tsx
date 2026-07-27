@@ -1,15 +1,15 @@
 import Link from 'next/link';
 
-import { homeContent } from '@/content/home';
-import { sharedSiteContent } from '@/content/site-shared';
+import { homeContent } from '@/content/site/home';
+import { sharedSiteContent } from '@/content/site/shared';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
-
-import { SystemObject } from '../ui/SystemObject';
 import {
   pageContainerClass,
   sectionLabelClass,
   textLinkClass,
-} from '../styles';
+} from '@/shared/ui/styles';
+
+import { SiteBlueprint } from '../ui/SiteBlueprint';
 
 const { contact } = sharedSiteContent;
 
@@ -48,8 +48,8 @@ export function HomeHero() {
             </Link>
           </div>
         </div>
-        <div className="grid min-h-[22rem] place-items-center border-l border-border pl-[clamp(1rem,5vw,5rem)] max-md:min-h-60 max-md:border-t max-md:border-l-0 max-md:px-0 max-md:pt-8">
-          <SystemObject />
+        <div className="grid min-h-[22rem] place-items-center max-md:-mx-[var(--space-gutter)] max-md:min-h-0 max-md:pt-5">
+          <SiteBlueprint />
         </div>
       </div>
     </section>

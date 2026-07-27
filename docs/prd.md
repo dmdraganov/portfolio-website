@@ -183,15 +183,15 @@ Yandex Metrica must record visits and explicit conversion events.
 
 ### 4.4 Motion and Interactive Identity
 
-#### FR-13: Meaningful 3D metaphor
+#### FR-13: Meaningful assembly metaphor
 
-The Home Page may use a modular 3D system that assembles, separates, and repairs itself as the visitor scrolls.
+The Home Page uses a code-native site blueprint that presents structure, interface, data, accessibility, and responsive behavior as parts of one working system.
 
 **Consequences:**
 
-- The visual reinforces creating, diagnosing, or repairing a system at specific narrative beats.
+- The visual reinforces creating, diagnosing, or repairing a web system.
 - It never blocks navigation, owns essential copy, or captures scroll.
-- A static or lightweight fallback preserves the composition if WebGL is unavailable.
+- The complete composition is server-rendered SVG and remains understandable without hover, motion, or client JavaScript; CSS may reveal its stages once on entry.
 
 #### FR-14: Motion control
 
@@ -221,7 +221,7 @@ Every public route must expose unique Russian title and description metadata.
 
 **Consequences:**
 
- The site includes canonical URLs on `https://draganov.vercel.app`.
+- The site includes canonical URLs on `https://draganov.vercel.app`.
 - `robots.txt` and `sitemap.xml` include all public routes.
 - Semantic heading order has one primary page heading.
 
@@ -271,7 +271,7 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 
 ### 7.1 In Scope
 
-- Home Page and two Case Studies.
+- Home Page and three Case Studies.
 - Responsive Russian content.
 - Direct Telegram, email, GitHub, Kwork, demo, and repository links.
 - Indicative prices and engagement terms.
@@ -281,7 +281,7 @@ Claims must be verifiable from the implemented projects or explicitly framed as 
 
 ### 7.2 Deferred
 
-- Additional projects until they have a deployable demo and sufficient media.
+- Additional projects until they have sufficient media and a public repository or deployable demo.
 - English localization.
 - Testimonials after genuine client work is available.
 - Contact form if direct channels later prove insufficient.

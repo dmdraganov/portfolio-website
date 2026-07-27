@@ -1,11 +1,13 @@
-import soundContacts from '../../../public/media/soundengineer-contacts.webp';
-import soundMobile from '../../../public/media/soundengineer-mobile.webp';
-import soundModal from '../../../public/media/soundengineer-modal.webp';
-import soundProjects from '../../../public/media/soundengineer-projects.webp';
-import soundServices from '../../../public/media/soundengineer-services.webp';
-import soundOverviewSource from '../../../public/media/soundengineer.webp';
+import {
+  soundContacts,
+  soundMobile,
+  soundModal,
+  soundOverviewSource,
+  soundProjects,
+  soundServices,
+} from './media';
 
-import { defineProject } from '../define';
+import { defineProject } from '../../define';
 
 const soundOverview = {
   source: soundOverviewSource,

@@ -44,7 +44,7 @@ The product is a **server-first modular monolith with progressive-enhancement is
 
 - **Binds:** all source units
 - **Prevents:** page concerns leaking into generic components, circular ownership, and cross-module coupling
-- **Rule:** Dependencies flow `app -> modules -> content/shared`; `app` may also read `content` and `shared`. `content/site-shared.ts` owns site-wide copy and destinations, `content/home.ts`, `content/case-study.ts`, and `content/system.ts` own their respective page copy, `content/projects.ts` owns the ordered project collection and its lookups, and `content/define.ts` owns the small reusable project contract. Server modules import only the immutable records they use; route adapters use the same collection for static params and metadata. `shared` imports no route, module, or content record, so shared primitives receive labels through props. Modules never import other modules. A client island stays beside its owning module until at least two modules require the same behavioral contract.
+- **Rule:** Dependencies flow `app -> modules -> content/shared`; `app` may also read `content` and `shared`. `content/site/` owns the site-wide, Home, Case Study, system, and site-media records; `content/projects.ts` owns the ordered project collection and its lookups; `content/projects/<slug>/` owns one project record and its static imports; and `content/define.ts` owns the small reusable project contract. Server modules import only the immutable records they use; route adapters use the same collection for static params and metadata. `shared` imports no route, module, or content record, so shared primitives receive labels through props. Modules never import other modules. A client island stays beside its owning module until at least two modules require the same behavioral contract.
 
 ```mermaid
 flowchart LR
@@ -78,7 +78,7 @@ flowchart LR
 
 - **Binds:** NFR-1..NFR-4, FR-13..FR-15
 - **Prevents:** accessibility, responsive behavior, or performance becoming per-component interpretation
-- **Rule:** Every module works at 320px+, with keyboard and touch, visible focus, semantic landmarks, one non-skipping heading hierarchy, Russian document metadata, and operating-system Reduced Motion. Interactive targets are at least 24×24 CSS px; primary touch actions prefer 44×44. Motion may explain state or provide feedback only; no scroll capture, infinite animation, layout-property animation, `transition: all`, or essential hover-only information. The newer static-MVP decision supersedes the source design's interactive four-state 3D renderer: one static SVG/image/CSS composition retains the assembly/repair metaphor, changes no state, and ships no WebGL or 3D dependency.
+- **Rule:** Every module works at 320px+, with keyboard and touch, visible focus, semantic landmarks, one non-skipping heading hierarchy, Russian document metadata, and operating-system Reduced Motion. Interactive targets are at least 24×24 CSS px; primary touch actions prefer 44×44. Motion may explain state or provide feedback only; no scroll capture, infinite animation, layout-property animation, `transition: all`, or essential hover-only information. The site blueprint is a static SVG/CSS composition that retains the assembly/repair metaphor, remains complete without hover, and ships no WebGL runtime.
 
 ### AD-7 — Media dimensions are derived; meaning stays with usage
 
@@ -163,8 +163,9 @@ src/
     case-study/                # Case Study page: widgets plus module-only UI/islands
   content/
     define.ts                  # small project/content contracts and assertions
-    site.ts                    # approved site, Home, UI and system copy
+    site/                      # approved site, Home, Case Study, system, and media copy
     projects.ts                # approved ordered project records and lookups
+    projects/<slug>/           # a project record (`index.ts`) and its media imports
   shared/
     analytics/                 # root-level analytics React leaves
     config/build.ts            # sole strict build-profile/environment parser
@@ -173,7 +174,7 @@ src/
     ui/                        # reusable visual/behavioral primitives
     widgets/                   # reusable composed interface blocks
 public/
-  media/                       # portrait, project, and social assets
+  media/                       # portrait and project assets, grouped by owner
 scripts/
   check-media.ts               # file integrity and byte-budget validation
 tests/
@@ -193,15 +194,15 @@ flowchart LR
 
 ## Capability → Architecture Map
 
-| Capability / Area                               | Lives in                                                           | Governed by              |
-| ----------------------------------------------- | ------------------------------------------------------------------ | ------------------------ |
-| Home narrative, services, process, about        | `modules/home`, `content`                                          | AD-1, AD-2, AD-3, AD-6   |
-| Project discovery and two Case Studies          | `content/projects.ts`, `modules/case-study`, `app/projects/[slug]` | AD-2, AD-3, AD-4, AD-7   |
+| Capability / Area                               | Lives in                                                                       | Governed by              |
+| ----------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------ |
+| Home narrative, services, process, about        | `modules/home`, `content`                                                      | AD-1, AD-2, AD-3, AD-6   |
+| Project discovery and two Case Studies          | `content/projects.ts`, `modules/case-study`, `app/projects/[slug]`             | AD-2, AD-3, AD-4, AD-7   |
 | Contact and external destinations               | `shared/ui/TrackedLink`, `shared/analytics`, `shared/lib/analytics`, `content` | AD-1, AD-8               |
-| Motion and system-object identity               | owning module islands and static media                             | AD-1, AD-6, AD-9         |
-| SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config                           | AD-3, AD-4, AD-10, AD-12 |
-| Responsive, accessible, resilient experience    | modules, shared UI, e2e gate                                       | AD-1, AD-6, AD-7, AD-12  |
-| Vercel Preview and Production delivery          | Vercel project settings, `package.json`, build config              | AD-10, AD-11, AD-12      |
+| Motion and site-blueprint identity              | owning module UI and static SVG layers                                         | AD-1, AD-6, AD-9         |
+| SEO, Open Graph, sitemap, robots, localized 404 | `app`, site/project records, site config                                       | AD-3, AD-4, AD-10, AD-12 |
+| Responsive, accessible, resilient experience    | modules, shared UI, e2e gate                                                   | AD-1, AD-6, AD-7, AD-12  |
+| Vercel Preview and Production delivery          | Vercel project settings, `package.json`, build config                          | AD-10, AD-11, AD-12      |
 
 ## Deferred
 

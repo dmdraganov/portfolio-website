@@ -1,4 +1,4 @@
-import portrait from '../../public/media/personal-photo.webp';
+import { portrait } from './media';
 
 export const sharedSiteContent = {
   seo: {

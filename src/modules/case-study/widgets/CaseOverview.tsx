@@ -1,13 +1,10 @@
 import Image from 'next/image';
 
 import type { Project } from '@/content/projects';
-import { caseStudyContent } from '@/content/case-study';
+import { caseStudyContent } from '@/content/site/case-study';
+import { pageContainerClass, sectionLabelClass } from '@/shared/ui/styles';
 
-import {
-  pageContainerClass,
-  sectionHeadingClass,
-  sectionLabelClass,
-} from '../styles';
+import { sectionHeadingClass } from '../styles';
 
 export function CaseOverview({ project }: Readonly<{ project: Project }>) {
   const representativeImage = project.gallery[0];

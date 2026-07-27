@@ -173,13 +173,14 @@ Base spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Section spacing is fluid
 - A spring may smooth the decorative label (`stiffness: 250`, `damping: 28`) without delaying actual hover state.
 - It never contains unique instructions and never appears on touch or coarse pointers.
 
-### 3D system object
+### Site blueprint
 
-- One scene, four named narrative states, no independent decorative orbit.
-- The scene pauses when offscreen or when the document is hidden.
-- Device-pixel ratio is capped and complexity is reduced on medium devices.
-- Static artwork is shown before the scene loads and when WebGL, Reduced Motion, data saving, or device capability requires it.
-- Essential content never enters the canvas accessibility tree.
+- One SVG composition with separate grid, interface, and system layers.
+- A one-time entrance reveals grid, browser frame, interface, and system connections in order.
+- Fine-pointer position alone may spring-shift the browser frame, interface, and system layer over a fixed coordinate grid; entering hover adds no preset transform, and the motion returns to rest on pointer leave.
+- Annotation density is reduced on compact screens.
+- Reduced Motion preserves the complete static composition.
+- The blueprint is decorative and never owns meaning unavailable in adjacent HTML.
 
 ## Icons and Imagery
 
@@ -187,7 +188,7 @@ Base spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Section spacing is fluid
 - No emoji icons and no guessed brand logos.
 - Use authentic, high-resolution project screenshots and a real portrait.
 - AI may extend or clean the portrait environment but must not fabricate identity.
-- Below-fold images are lazy-loaded; the hero image or static system fallback is prioritized only when it is the LCP candidate.
+- Below-fold images are lazy-loaded; the code-native hero blueprint requires no image preload.
 
 ## Anti-Patterns
 
@@ -196,7 +197,7 @@ Base spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Section spacing is fluid
 - Infinite decorative animation, autoplay audio, scroll hijacking, or mandatory horizontal scroll.
 - `transition: all`, `ease-in` responses, `scale(0)`, and UI animation above 300ms.
 - Animating width, height, top, left, padding, or margin.
-- Multiple independent parallax layers competing with the 3D system.
+- Multiple independent parallax layers competing with the site blueprint.
 - Low-quality project images, extreme perspective mockups, and abstract visuals that obscure real interfaces.
 - Custom cursor on touch or as the sole affordance.
 
@@ -206,5 +207,5 @@ Base spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 96px. Section spacing is fluid
 - Inputs: mouse, keyboard, touch, and coarse pointer.
 - Preferences: Reduced Motion, 200% text zoom, 400% reflow where applicable.
 - Modes: default light and every intentional inverse section.
-- Runtime: normal, no WebGL, slow network, JavaScript enhancement failure.
+- Runtime: normal, slow network, and JavaScript enhancement failure.
 - Motion review: normal speed, 2-5x slow motion, frame-by-frame, and at least one real mobile device.

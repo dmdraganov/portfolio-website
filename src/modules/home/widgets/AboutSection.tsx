@@ -1,12 +1,9 @@
 import Image from 'next/image';
 
-import { homeContent } from '@/content/home';
+import { homeContent } from '@/content/site/home';
+import { pageContainerClass, sectionLabelClass } from '@/shared/ui/styles';
 
-import {
-  pageContainerClass,
-  sectionHeadingClass,
-  sectionLabelClass,
-} from '../styles';
+import { sectionHeadingClass } from '../styles';
 
 export function AboutSection() {
   return (

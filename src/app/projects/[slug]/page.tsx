@@ -11,13 +11,17 @@ type ProjectPageProps = Readonly<{
 
 export const dynamicParams = false;
 
+async function resolveProject({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  return getProject(slug);
+}
+
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps) {
-  const { slug } = await params;
-  const project = getProject(slug);
+  const project = await resolveProject({ params });
 
   return project === undefined
     ? {}
@@ -28,8 +32,7 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug } = await params;
-  const project = getProject(slug);
+  const project = await resolveProject({ params });
 
   if (project === undefined) notFound();
 

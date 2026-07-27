@@ -17,7 +17,7 @@ Prove capability through a readable technical narrative, real interface media, a
 
 ## Motion Budget
 
-- Do not carry the Home Page 3D scene into Case Studies.
+- Do not carry the Home Page blueprint into Case Studies.
 - Opening media may use one clip-path reveal over 600ms with `--ease-in-out`.
 - Remaining media uses opacity plus at most 8px translation, once per asset.
 - Gallery viewer follows the modal contract in `MASTER.md`.

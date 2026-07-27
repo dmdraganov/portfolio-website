@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
-import { systemContent } from '../content/system';
+import { systemContent } from '@/content/site/system';
 
 export const metadata: Metadata = {
   title: systemContent.notFoundMetadataTitle,

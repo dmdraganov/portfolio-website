@@ -1,43 +1,44 @@
 import Link from 'next/link';
 
 import type { Project } from '@/content/projects';
-import { caseStudyContent } from '@/content/case-study';
-import { sharedSiteContent } from '@/content/site-shared';
-import { TrackedLink } from '@/shared/ui/TrackedLink';
-
+import { caseStudyContent } from '@/content/site/case-study';
+import { sharedSiteContent } from '@/content/site/shared';
+import { cn } from '@/shared/lib/utils';
+import { primaryCtaClass } from '@/shared/ui/PrimaryCta';
 import {
   pageContainerClass,
   sectionLabelClass,
   textLinkClass,
-} from '../styles';
+} from '@/shared/ui/styles';
+import { TrackedExternalLink } from '@/shared/ui/TrackedExternalLink';
 
 const { common } = sharedSiteContent;
 
 function ProjectActions({ project }: Readonly<{ project: Project }>) {
+  const demo = 'demo' in project.links ? project.links.demo : undefined;
+
   return (
     <div className="mt-8 flex flex-wrap items-center gap-4">
-      <TrackedLink
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-signal px-6 py-3 font-semibold text-signal-contrast no-underline transition-[transform_140ms_var(--ease-out),background-color_180ms_var(--ease-out)] active:scale-[0.97] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-[color-mix(in_srgb,var(--signal)_86%,var(--ink))]"
-        href={project.links.demo.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        event={{ name: 'project_demo', project: project.slug }}
-      >
-        {project.links.demo.label}
-        <span aria-hidden="true"> ↗</span>
-        <span className="sr-only"> ({common.externalLinkDescription})</span>
-      </TrackedLink>
-      <TrackedLink
+      {demo === undefined ? null : (
+        <TrackedExternalLink
+          className={cn(primaryCtaClass, 'min-h-12')}
+          href={demo.href}
+          event={{ name: 'project_demo', project: project.slug }}
+          newTabDescription={common.externalLinkDescription}
+        >
+          {demo.label}
+          <span aria-hidden="true"> ↗</span>
+        </TrackedExternalLink>
+      )}
+      <TrackedExternalLink
         className={textLinkClass}
         href={project.links.repository.href}
-        target="_blank"
-        rel="noopener noreferrer"
         event={{ name: 'project_repository', project: project.slug }}
+        newTabDescription={common.externalLinkDescription}
       >
         {project.links.repository.label}
         <span aria-hidden="true"> ↗</span>
-        <span className="sr-only"> ({common.externalLinkDescription})</span>
-      </TrackedLink>
+      </TrackedExternalLink>
     </div>
   );
 }

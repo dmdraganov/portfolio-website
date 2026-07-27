@@ -3,14 +3,14 @@ import Link from 'next/link';
 
 import type { Project } from '@/content/projects';
 import { projects } from '@/content/projects';
-import { homeContent } from '@/content/home';
-
+import { homeContent } from '@/content/site/home';
 import {
   pageContainerClass,
-  sectionHeadingClass,
   sectionLabelClass,
   textLinkClass,
-} from '../styles';
+} from '@/shared/ui/styles';
+
+import { sectionHeadingClass } from '../styles';
 
 function ProjectEntry({
   project,

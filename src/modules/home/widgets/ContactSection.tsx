@@ -1,14 +1,14 @@
-import { homeContent } from '@/content/home';
-import { sharedSiteContent } from '@/content/site-shared';
+import { homeContent } from '@/content/site/home';
+import { sharedSiteContent } from '@/content/site/shared';
 import { ExternalLink } from '@/shared/ui/ExternalLink';
 import { PrimaryCta } from '@/shared/ui/PrimaryCta';
-
 import {
   pageContainerClass,
-  sectionHeadingClass,
   sectionLabelClass,
   textLinkClass,
-} from '../styles';
+} from '@/shared/ui/styles';
+
+import { sectionHeadingClass } from '../styles';
 
 const { contact, common } = sharedSiteContent;
 

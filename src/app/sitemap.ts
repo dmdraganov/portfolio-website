@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-import { projects } from '../content/projects';
-import { toCanonicalUrl } from '../shared/lib/url';
+import { projects } from '@/content/projects';
+import { toCanonicalUrl } from '@/shared/lib/url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
