@@ -199,5 +199,5 @@ The Home Page uses `docs/design-system/pages/home.md`. Both Case Studies use `do
 
 - Canonical domain: `draganov.vercel.app`.
 - Portrait: the existing site portrait is final and needs no further treatment.
-- Route-specific Open Graph images: `og-home.webp`, `og-weather-app.webp`, and `og-sound-engineer.webp`.
+- Route-specific Open Graph images: `og-home.webp` for the Home page; existing overview images for both MVP Case Studies.
 - Yandex Metrica production counter: `111050926`.
