@@ -1,4 +1,4 @@
-import ogHome from '../../public/media/og-home.webp';
+import portrait from '../../public/media/personal-photo.webp';
 
 export const sharedSiteContent = {
   seo: {
@@ -6,8 +6,8 @@ export const sharedSiteContent = {
     description:
       'Создаю сайты с нуля, исправляю ошибки и развиваю существующие веб-проекты. Понятная оценка, работа по требованиям и прямое общение.',
     image: {
-      source: ogHome,
-      alt: 'Абстрактный интерфейс и схема веб-системы в синих тонах',
+      source: portrait,
+      alt: 'Портрет Дмитрия Драганова',
     },
   },
   header: {
